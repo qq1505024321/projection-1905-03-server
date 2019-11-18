@@ -1,6 +1,7 @@
 package com.jk.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -25,6 +26,18 @@ public class Users implements Serializable {
     private String phoneNumber;
     //用户类型    1 =学生 ； 2= 教师
     private Integer userType;
+
+    private Integer userCount;
+
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getPassWord() {
         return passWord;
@@ -66,14 +79,24 @@ public class Users implements Serializable {
         this.userType = userType;
     }
 
+    public Integer getUserCount() {
+        return userCount;
+    }
+
+    public void setUserCount(Integer userCount) {
+        this.userCount = userCount;
+    }
+
     @Override
     public String toString() {
         return "Users{" +
                 "userId=" + userId +
-                ", userName=" + userName +
+                ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", userType=" + userType +
+                ", userCount=" + userCount +
+                ", createTime=" + createTime +
                 '}';
     }
 }

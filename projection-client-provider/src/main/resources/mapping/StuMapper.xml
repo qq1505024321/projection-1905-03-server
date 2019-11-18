@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jk.mapper.LoginMapper" >
+<mapper namespace="com.jk.mapper.StuMapper" >
 
+    <select id="queryUser" resultType="com.jk.model.Users">
+        select userName,phoneNumber,createTime,userCount from t_user t
+        where t.userType=1
+        order by t.createTime desc
+    </select>
     <!--<select id="queryUserByUsername" resultType="com.jk.model.UserHt">
         select * from ht_user t where t.userName=#{userName}
     </select>

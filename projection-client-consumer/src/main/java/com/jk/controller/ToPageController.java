@@ -18,4 +18,10 @@ public class ToPageController {
     public String toMain(){
         return "main";
     }
+
+    //这是跳转后台查询学生的方法
+    @RequestMapping("toShowStudent")
+    public String toShowStudent(){
+        return "Student/ShowStudent";
+    }
 }
