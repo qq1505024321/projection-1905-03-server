@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.LoginMapper" >
+
+    <!--<select id="queryUserByUsername" resultType="com.jk.model.UserHt">
+        select * from ht_user t where t.userName=#{userName}
+    </select>
+
+    <select id="querysum" resultType="int">
+        select count(*) from t_book
+    </select>
+
+    <select id="queryBook" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookList" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookByName" resultType="com.jk.model.Book">
+        select ${value} from t_book
+    </select>
+
+    <select id="queryById" resultType="com.jk.model.Book" parameterType="int">
+        select * from t_book where bookId=#{id}
+    </select>
+
+    <insert id="addBook" parameterType="com.jk.model.Book" >
+        insert into t_book(bookName,bookPrice,bookType) values (#{bookName},#{bookPrice},#{bookType})
+    </insert>
+
+    <delete id="deleteBook" parameterType="int">
+        delete from t_book where bookId=#{id}
+    </delete>
+
+    <update id="updateBook" parameterType="com.jk.model.Book">
+        update t_book set bookName=#{bookName},bookPrice=#{bookPrice},bookType=#{bookType} where bookId=#{bookId}
+    </update>
+
+    <insert id="addBookList" parameterType="java.util.List">
+        insert into t_book (bookName,bookPrice,bookType)
+        values
+        <foreach collection="list" item="l" separator=",">
+        (#{l.bookName},#{l.bookPrice},#{l.bookType})
+        </foreach>
+
+    </insert>-->
+</mapper>
