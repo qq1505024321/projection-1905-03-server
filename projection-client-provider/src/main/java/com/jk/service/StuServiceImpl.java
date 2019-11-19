@@ -25,4 +25,9 @@ public class StuServiceImpl implements StuService{
         hashMap.put("rows", userList);
         return hashMap;
     }
+
+    @Override
+    public void deleteStuByIds(String ids) {
+        stuMapper.deleteStuByIds(ids);
+    }
 }

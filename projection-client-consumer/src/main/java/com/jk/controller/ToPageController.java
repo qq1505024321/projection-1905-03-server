@@ -24,4 +24,10 @@ public class ToPageController {
     public String toShowStudent(){
         return "Student/ShowStudent";
     }
+
+    //这是跳转后台查询教师的方法
+    @RequestMapping("toShowTeacher")
+    public String toShowTeacher(){
+        return "teacher/ShowTeacher";
+    }
 }

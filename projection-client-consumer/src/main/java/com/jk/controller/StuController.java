@@ -14,9 +14,16 @@ import java.util.Map;
 public class StuController {
     @Reference
     public StuService stuService;
+    /*这是查询学生展示的方法*/
     @RequestMapping("queryUser")
     @ResponseBody
     public Map<String,Object> queryUser(Integer page, Integer rows, Users user){
         return stuService.queryUser(page,rows,user);
+    }
+    /*这是删除学生的方法*/
+    @RequestMapping("deleteStuByIds")
+    @ResponseBody
+    public void deleteStuByIds(String ids){
+        stuService.deleteStuByIds(ids);
     }
 }
