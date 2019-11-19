@@ -71,10 +71,18 @@
                 columns:[
                     [
                         {field:'111',title:'11',checkbox:true},
-                        {field:'userName',title:'学生姓名'},
-                        {field:'phoneNumber',title:'手机号'},
+                        {field:'teaNumber',title:'老师编号'},
+                        {field:'teaImg',title:'头像'},
+                        {field:'teaPhone',title:'手机号'},
+                        {field:'teaName',title:'姓名'},
+                        {field:'teaGrade',title:'年级'},
+                        {field:'teaSubject',title:'课程'},
+                        {field:'teaShow',title:'简介'},
                         {field:'createTime',title:'注册时间'},
-                        {field:'userCount',title:'购买课程数量'},
+                        {field:'money',title:'工资'},
+                        {field:'stuCount',title:'学生数量'},
+                        {field:'courseCount',title:'课程数量'},
+                        {field:'stuStatus',title:'状态'},
                         {field:'123',title:'操作',formatter:function(value,row,index){
                                 return '</button><button class="btn btn-link" onclick="deleteUserById('+ row.userId +',\''+row.userName+'\')" >删除</button>';
                             }}

@@ -29,13 +29,13 @@ public class Users implements Serializable {
 
     private Integer userCount;
 
-    private Date createTime;
+    private String createTime;
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -96,7 +96,7 @@ public class Users implements Serializable {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", userType=" + userType +
                 ", userCount=" + userCount +
-                ", createTime=" + createTime +
+                ", createTime='" + createTime + '\'' +
                 '}';
     }
 }
