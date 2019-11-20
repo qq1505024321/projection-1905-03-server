@@ -8,4 +8,5 @@ public interface TeacherMapper {
 
     List<Teacher> queryTeacher(Teacher teacher);
 
+    void deleteTeacherByIds(String ids);
 }

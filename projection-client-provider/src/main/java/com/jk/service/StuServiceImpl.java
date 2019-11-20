@@ -30,4 +30,9 @@ public class StuServiceImpl implements StuService{
     public void deleteStuByIds(String ids) {
         stuMapper.deleteStuByIds(ids);
     }
+
+    @Override
+    public void deleteStuByUserId(String ids) {
+        stuMapper.deleteStuByUserId(ids);
+    }
 }

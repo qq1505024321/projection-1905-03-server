@@ -75,22 +75,57 @@
                         {field:'teaImg',title:'头像'},
                         {field:'teaPhone',title:'手机号'},
                         {field:'teaName',title:'姓名'},
-                        {field:'teaGrade',title:'年级'},
-                        {field:'teaSubject',title:'课程'},
+                        {field:'subName',title:'课程类型'},
+                        {field:'subjectname',title:'课程详细'},
                         {field:'teaShow',title:'简介'},
                         {field:'createTime',title:'注册时间'},
-                        {field:'money',title:'工资'},
+                        {field:'subjectTime',title:'开课时间'},
                         {field:'stuCount',title:'学生数量'},
                         {field:'courseCount',title:'课程数量'},
-                        {field:'stuStatus',title:'状态'},
+                        {field:'teacherlevel',title:'老师等级'},
                         {field:'123',title:'操作',formatter:function(value,row,index){
-                                return '</button><button class="btn btn-link" onclick="deleteUserById('+ row.userId +',\''+row.userName+'\')" >删除</button>';
+                                return '</button><button class="btn btn-link" onclick="deleteTeacherById('+ row.teaId +',\''+row.teaName+'\')" >删除</button> </button><button class="btn btn-link" onclick="deleteUserById('+ row.teaId +')" >修改</button>';
                             }}
                     ]
                 ]
             })
         }
 
+            // 单删
+        function deleteTeacherById(id, realname) {
+            bootbox.confirm({
+                size: "small",
+                message: "你确定要删除 " + realname + " 吗?",
+                buttons: {
+                    confirm: {
+                        "label": "确认",
+                        "class": "btn-success",
+                    },
+                    cancel: {
+                        "label": "取消",
+                        "class": "btn-danger",
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "../teacher/deleteTeacherByIds",
+                            type: "post",
+                            data: {"ids": id},
+                            dataType: "json",
+                            success: function (msg) {
+                                if (msg > 0) {
+                                    //queryShowStudent();
+                                    $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
+                                }
+
+                            }
+                        })
+                    }
+                }
+            })
+
+        }
     </script>
 </body>
 </html>

@@ -25,4 +25,9 @@ public class TeacherServiceImpl implements TeacherService {
         hashMap.put("rows", userList);
         return hashMap;
     }
+
+    @Override
+    public void deleteTeacherByIds(String ids) {
+        teacherMapper.deleteTeacherByIds(ids);
+    }
 }

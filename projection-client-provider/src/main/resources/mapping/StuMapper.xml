@@ -2,14 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.mapper.StuMapper" >
 
+
     <select id="queryUser" resultType="com.jk.model.Users">
-        select userId,userName,phoneNumber,createTime,userCount from t_user t
-        where t.userType=1
-        order by t.createTime desc
+        SELECT u.userName,u.createTime,u.userId,u.phoneNumber,s.stuCount as userCount FROM t_user u,t_student s
+        where s.stuId = u.userId
+        <include refid="searchSql"></include>
+        order by u.createTime desc
     </select>
+
+    <sql id="searchSql">
+        <if test="userName != null and userName != ''">
+            and userName like '%${userName}%'
+        </if>
+        <if test="startDate != null and startDate != ''">
+            and createTime &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and createTime &lt;= #{endDate}
+        </if>
+    </sql>
 
     <delete id="deleteStuByIds" parameterType="string">
         delete from t_user where userId in (${ids})
+    </delete>
+
+    <delete id="deleteStuByUserId" parameterType="string">
+        delete from t_student where stuId in (${ids})
     </delete>
 
     <!--<select id="queryUserByUsername" resultType="com.jk.model.UserHt">

@@ -31,13 +31,30 @@
     <link rel="stylesheet" href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
 </head>
 <body>
+<div id="toolbar" class="container">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="userName">学生姓名</label>
+            <input type="text" id="userName" class="form-control" placeholder="学生姓名" />
+        </div>
+        <div class="form-group">
+            <label for="startDate">注册日期</label>
+            <input type="text" id="startDate" class="form-control date" placeholder="开始日期" />-
+            <input type="text" id="endDate" class="form-control date" placeholder="结束日期" />
+        </div>
+        <div class="form-group">
+            <button onclick="queryShowStudent()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+        </div>
+    </div>
+    <button id="delUser" class="btn btn-danger glyphicon glyphicon-remove">删除</button>
+</div>
     <table class="table" id="myTable"></table>
 <script>
     $(function(){
         queryShowStudent();
     })
     function queryShowStudent(){
-
+        $("#myTable").bootstrapTable("refresh",{'pageNumber':1});
         //列表展示
         $('#myTable').bootstrapTable({
             toolbar:'#toolbar',
@@ -46,8 +63,8 @@
             pageList:[2, 10, 20, 50],//分页组件
             pageNumber:1,
             pageSize:2,//默认每页条数
-            search:true,//是否显示搜索框
-            searchText:'搜索',//初始化搜索文字
+            //search:true,//是否显示搜索框
+            //searchText:'搜索',//初始化搜索文字
             showColumns:false,//是否显示 内容列下拉框
             showToggle:false,//是否显示 切换试图（table/card）按钮
             showPaginationSwitch:false,//是否显示 数据条数选择框
@@ -61,11 +78,9 @@
                 return{
                     page:this.pageNumber,
                     rows:this.pageSize,
-                    /*account:$("#account").val(),
-                    realname:$("#realname").val(),
+                    userName:$("#userName").val(),
                     startDate:$("#startDate").val(),
                     endDate:$("#endDate").val(),
-                    deptId:$("#deptId").val(),*/
                 };
             },
             columns:[
@@ -76,7 +91,7 @@
                 {field:'createTime',title:'注册时间'},
                 {field:'userCount',title:'购买课程数量'},
                 {field:'123',title:'操作',formatter:function(value,row,index){
-                        return '</button><button class="btn btn-link" onclick="deleteUserById('+ row.userId +',\''+row.userName+'\')" >删除</button>';
+                        return '<button class="btn btn-link" onclick="deleteUserById('+ row.userId +',\''+row.userName+'\')" >删除</button>';
                     }}
             ]
             ]
@@ -105,15 +120,63 @@
                         type: "post",
                         data: {"ids": userId},
                         dataType: "json",
-                        success: function (data) {
-                            //$("#myTable").bootstrapTable("refresh");
-                           queryShowStudent();
+                        success: function (msg) {
+                            if (msg > 0) {
+                                //queryShowStudent();
+                                $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
+                            }
                         }
                     })
                 }
             }
         })
     }
+    //批删
+    $("#delUser").click(function(){
+        var ids = "";
+        var names = "";
+        var row = $("#myTable").bootstrapTable("getSelections");
+        if(row==null || row.length==0){
+            bootbox.alert({
+                size: "small",
+                title: "提示",
+                message: "请选择要删除的数据！",
+                callback: function(){}
+            });
+            return;
+        }
+        for(var i=0; i<row.length; i++){
+            ids += ids==""?row[i].userId:","+row[i].userId;
+            names += names==""?row[i].userName:","+row[i].userName;
+        }
+        bootbox.confirm({
+            size: "small",
+            message: "你确定要删除 "+names+" 吗?",
+            buttons: {
+                confirm: {
+                    "label": "确认",
+                    "class": "btn-success",
+                },
+                cancel: {
+                    "label": "取消",
+                    "class": "btn-danger",
+                }
+            },
+            callback: function(result){
+                if(result){
+                    $.ajax({
+                        url: "deleteUserByIds.do",
+                        type: "post",
+                        data: {"ids":ids},
+                        dataType: "json",
+                        success:function(data){
+                            $("#myTable").bootstrapTable("refresh");
+                        }
+                    })
+                }
+            }
+        })
+    })
 
     $('.date').datetimepicker({
         language: 'zh-CN',//显示中文

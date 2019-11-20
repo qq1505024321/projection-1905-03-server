@@ -10,4 +10,6 @@ public interface StuMapper {
     List<Users> queryUser(Users user);
     /*删除学生方法*/
     void deleteStuByIds(@Param("ids") String ids);
+
+    void deleteStuByUserId(@Param("ids")String ids);
 }

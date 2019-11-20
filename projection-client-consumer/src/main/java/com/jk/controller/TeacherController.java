@@ -14,10 +14,19 @@ import java.util.Map;
 public class TeacherController {
     @Reference
     private TeacherService teacherService;
-
+    /*这是查询老师的信息*/
     @RequestMapping("queryTeacher")
     @ResponseBody
     public Map<String,Object> queryUser(Integer page, Integer rows, Teacher teacher){
         return teacherService.queryTeacher(page,rows,teacher);
     }
+
+    /*这是删除老师的方法*/
+    @RequestMapping("deleteTeacherByIds")
+    @ResponseBody
+    public int deleteTeacherByIds(String ids){
+        teacherService.deleteTeacherByIds(ids);
+        return 1 ;
+    }
+
 }
