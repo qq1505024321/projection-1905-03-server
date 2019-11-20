@@ -30,6 +30,9 @@ public class Users implements Serializable {
     private Integer userCount;
 
     private String createTime;
+    //临时字段时间区间
+    private String startDate;
+    private String endDate;
 
     public String getCreateTime() {
         return createTime;
@@ -87,6 +90,22 @@ public class Users implements Serializable {
         this.userCount = userCount;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public String toString() {
         return "Users{" +
@@ -97,6 +116,8 @@ public class Users implements Serializable {
                 ", userType=" + userType +
                 ", userCount=" + userCount +
                 ", createTime='" + createTime + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
                 '}';
     }
 }

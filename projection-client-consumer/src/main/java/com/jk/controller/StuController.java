@@ -23,7 +23,9 @@ public class StuController {
     /*这是删除学生的方法*/
     @RequestMapping("deleteStuByIds")
     @ResponseBody
-    public void deleteStuByIds(String ids){
+    public int deleteStuByIds(String ids){
         stuService.deleteStuByIds(ids);
+        stuService.deleteStuByUserId(ids);
+        return 1;
     }
 }

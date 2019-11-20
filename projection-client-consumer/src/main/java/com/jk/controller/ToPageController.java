@@ -30,4 +30,10 @@ public class ToPageController {
     public String toShowTeacher(){
         return "teacher/ShowTeacher";
     }
+
+    //这是跳转后台审核教师的方法
+    @RequestMapping("toShowApplication")
+    public String toShowApplication(){
+        return "teacher/showApplication";
+    }
 }

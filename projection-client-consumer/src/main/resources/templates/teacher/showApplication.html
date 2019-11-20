@@ -29,42 +29,25 @@
     <script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+
 </head>
 <body>
-<div id="toolbar" class="container">
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="userName">学生姓名</label>
-            <input type="text" id="userName" class="form-control" placeholder="学生姓名" />
-        </div>
-        <div class="form-group">
-            <label for="startDate">注册日期</label>
-            <input type="text" id="startDate" class="form-control date" placeholder="开始日期" />-
-            <input type="text" id="endDate" class="form-control date" placeholder="结束日期" />
-        </div>
-        <div class="form-group">
-            <button onclick="queryShowStudent()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
-        </div>
-    </div>
-    <button id="delUser" class="btn btn-danger glyphicon glyphicon-remove">删除</button>
-</div>
     <table class="table" id="myTable"></table>
 <script>
     $(function(){
-        queryShowStudent();
+        queryApplication();
     })
-    function queryShowStudent(){
+    function queryApplication(){
         $("#myTable").bootstrapTable("refresh",{'pageNumber':1});
         //列表展示
         $('#myTable').bootstrapTable({
-            toolbar:'#toolbar',
-            url:'../stu/queryUser',//获取数据地址
+            url:'../teacher/queryApplication',//获取数据地址
             pagination:true, //是否展示分页
             pageList:[2, 10, 20, 50],//分页组件
             pageNumber:1,
             pageSize:2,//默认每页条数
-            //search:true,//是否显示搜索框
-            //searchText:'搜索',//初始化搜索文字
+            // search:true,//是否显示搜索框
+            // searchText:'搜索',//初始化搜索文字
             showColumns:false,//是否显示 内容列下拉框
             showToggle:false,//是否显示 切换试图（table/card）按钮
             showPaginationSwitch:false,//是否显示 数据条数选择框
@@ -78,80 +61,50 @@
                 return{
                     page:this.pageNumber,
                     rows:this.pageSize,
-                    userName:$("#userName").val(),
-                    startDate:$("#startDate").val(),
-                    endDate:$("#endDate").val(),
+                    /*teaName:$("#teaName").val(),
+                    Datestart:$("#Datestart").val(),
+                    Dateend:$("#Dateend").val(),
+                    tealevelId:$("#tealevelId").val(),*/
                 };
             },
             columns:[
                 [
-                {field:'111',title:'11',checkbox:true},
-                {field:'userName',title:'学生姓名'},
-                {field:'phoneNumber',title:'手机号'},
-                {field:'createTime',title:'注册时间'},
-                {field:'userCount',title:'购买课程数量'},
-                {field:'123',title:'操作',formatter:function(value,row,index){
-                        return '<button class="btn btn-link" onclick="deleteUserById('+ row.userId +',\''+row.userName+'\')" >删除</button>';
-                    }}
-            ]
+                    {field:'111',title:'11',checkbox:true},
+                    {field:'teachername',title:'老师姓名'},
+                    {field:'teacherlevel',title:'老师等级'},
+                    {field:'shenfenzheng',title:'身份证号'},
+                    {field:'identityimg',title:'身份证图片'},
+                    {field:'certification',title:'资质证书'},
+                    {field:'appstatus',title:'申请状态',formatter:function(value,row,index) {
+                            if(value==1){
+                                return "审核中"
+                            }else if(value==2){
+                                return "审核通过"
+                            }else if(value==3){
+                                return "审核拒绝"
+                            }
+                        }
+                    },
+                    {field:'subname',title:'教学科目'},
+                    {field:'teachershow',title:'老师简介'},
+                    {field:'123',title:'操作',formatter:function(value,row,index){
+                            if(row.appstatus==1){
+                                return '</button><button class="btn btn-link" onclick="applicationPass('+ row.appid +',\''+row.teachername+'\',2)" >通过</button>'+
+                                        '</button><button class="btn btn-link" onclick="applicationRefuse('+ row.appid +',\''+row.teachername+'\',3)" >拒绝</button>'+
+                                        '</button><button class="btn btn-link" onclick="deleteTeacherById('+ row.teaId +',\''+row.teaName+'\')" >删除</button>';
+                            }else if(row.appstatus==2||row.appstatus==3){
+                                return '</button><button class="btn btn-link" onclick="deleteTeacherById('+ row.teaId +',\''+row.teaName+'\')" >删除</button>';
+                            }
+                        }}
+                ]
             ]
         })
     }
 
-    // 单删
-    function deleteUserById(userId, userName) {
+    function applicationRefuse(id,teachername,flag){
         bootbox.confirm({
             size: "small",
-            message: "你确定要删除 " + userName + " 吗?",
-            buttons: {
-                confirm: {
-                    "label": "确认",
-                    "class": "btn-success",
-                },
-                cancel: {
-                    "label": "取消",
-                    "class": "btn-danger",
-                }
-            },
-            callback: function (result) {
-                if (result) {
-                    $.ajax({
-                        url: "../stu/deleteStuByIds",
-                        type: "post",
-                        data: {"ids": userId},
-                        dataType: "json",
-                        success: function (msg) {
-                            if (msg > 0) {
-                                //queryShowStudent();
-                                $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
-                            }
-                        }
-                    })
-                }
-            }
-        })
-    }
-    //批删
-    $("#delUser").click(function(){
-        var ids = "";
-        var names = "";
-        var row = $("#myTable").bootstrapTable("getSelections");
-        if(row==null || row.length==0){
-            bootbox.alert({
-                size: "small",
-                title: "提示",
-                message: "请选择要删除的数据！",
-                callback: function(){}
-            });
-            return;
-        }
-        for(var i=0; i<row.length; i++){
-            ids += ids==""?row[i].userId:","+row[i].userId;
-            names += names==""?row[i].userName:","+row[i].userName;
-        }
-        bootbox.confirm({
-            size: "small",
-            message: "你确定要删除 "+names+" 吗?",
+            message: "亲爱的管理员，您确定要将"+teachername+"审核拒绝吗?",
             buttons: {
                 confirm: {
                     "label": "确认",
@@ -165,28 +118,49 @@
             callback: function(result){
                 if(result){
                     $.ajax({
-                        url: "deleteUserByIds.do",
+                        url: "../teacher/updateAppStatus?id="+id+"&flag="+flag,
                         type: "post",
-                        data: {"ids":ids},
                         dataType: "json",
-                        success:function(data){
-                            $("#myTable").bootstrapTable("refresh");
+                        success:function(msg){
+                            if (msg > 0) {
+                                $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
+                            }
                         }
                     })
                 }
             }
         })
-    })
-
-    $('.date').datetimepicker({
-        language: 'zh-CN',//显示中文
-//		format: 'yyyy-mm-dd hh:ii:ss',  显示格式
-        format: 'yyyy-mm-dd',//显示格式
-        minView: "month",//设置只显示到月份
-        initialDate: new Date(),//初始化当前日期
-        autoclose: true,//选中自动关闭
-        todayBtn: true//显示今日按钮
-    });
+    }
+    function applicationPass(id,teachername,flag){
+        bootbox.confirm({
+            size: "small",
+            message: "亲爱的管理员，您确定要将"+teachername+"审核通过吗?",
+            buttons: {
+                confirm: {
+                    "label": "确认",
+                    "class": "btn-success",
+                },
+                cancel: {
+                    "label": "取消",
+                    "class": "btn-danger",
+                }
+            },
+            callback: function(result){
+                if(result){
+                    $.ajax({
+                        url: "../teacher/updateAppStatus?id="+id+"&flag="+flag,
+                        type: "post",
+                        dataType: "json",
+                        success:function(msg){
+                            if (msg > 0) {
+                                $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
 </script>
 </body>
 </html>

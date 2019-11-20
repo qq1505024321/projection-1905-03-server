@@ -3,21 +3,105 @@ package com.jk.model;
 import java.io.Serializable;
 
 public class Teacher implements Serializable {
+
     private static final long serialVersionUID = 3884085340913885123L;
 
     private Integer teaId;
+
     private String teaNumber;
+
     private String teaPhone;
+
     private String teaImg;
+
     private String teaName;
-    private String teaGrade;
-    private Integer teaSubject;
+
+    private Integer subjectId;
+    /*临时字段课程名字*/
+    private String subName;
+    /*临时字段课程详细*/
+    private String subjectname;
+
     private String teaShow;
+
+    private Integer lvId;
+
     private String createTime;
-    private Integer money;
+    /*临时字段开课时间*/
+    private String subjectTime;
+
+    private Integer moneyId;
+
     private Integer stuCount;
+
     private Integer courseCount;
-    private Integer stuStatus;
+
+    private Integer tealevelId;
+
+    private String shenfenzheng;
+
+    private String identityimg;
+
+    private Integer subId;
+
+    private Integer courseid;
+
+    /*临时字段老师等级*/
+    private String teacherlevel;
+
+    public Integer getLvId() {
+        return lvId;
+    }
+
+    public void setLvId(Integer lvId) {
+        this.lvId = lvId;
+    }
+
+    public Integer getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(Integer courseid) {
+        this.courseid = courseid;
+    }
+
+
+    public String getIdentityimg() {
+        return identityimg;
+    }
+
+    public void setIdentityimg(String identityimg) {
+        this.identityimg = identityimg;
+    }
+
+    public Integer getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Integer subId) {
+        this.subId = subId;
+    }
+
+    public Integer getTealevelId() {
+        return tealevelId;
+    }
+
+    public void setTealevelId(Integer tealevelId) {
+        this.tealevelId = tealevelId;
+    }
+
+    public String getTeacherlevel() {
+        return teacherlevel;
+    }
+
+    public void setTeacherlevel(String teacherlevel) {
+        this.teacherlevel = teacherlevel;
+    }
+
+    /*临时字段条查使用*/
+    private String Datestart;
+
+    private String Dateend;
 
     public Integer getTeaId() {
         return teaId;
@@ -59,20 +143,36 @@ public class Teacher implements Serializable {
         this.teaName = teaName;
     }
 
-    public String getTeaGrade() {
-        return teaGrade;
+    public String getSubjectname() {
+        return subjectname;
     }
 
-    public void setTeaGrade(String teaGrade) {
-        this.teaGrade = teaGrade;
+    public void setSubjectname(String subjectname) {
+        this.subjectname = subjectname;
     }
 
-    public Integer getTeaSubject() {
-        return teaSubject;
+    public Integer getSubjectId() {
+        return subjectId;
     }
 
-    public void setTeaSubject(Integer teaSubject) {
-        this.teaSubject = teaSubject;
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public String getSubName() {
+        return subName;
+    }
+
+    public void setSubName(String subName) {
+        this.subName = subName;
+    }
+
+    public String getSubjectTime() {
+        return subjectTime;
+    }
+
+    public void setSubjectTime(String subjectTime) {
+        this.subjectTime = subjectTime;
     }
 
     public String getTeaShow() {
@@ -91,12 +191,12 @@ public class Teacher implements Serializable {
         this.createTime = createTime;
     }
 
-    public Integer getMoney() {
-        return money;
+    public Integer getMoneyId() {
+        return moneyId;
     }
 
-    public void setMoney(Integer money) {
-        this.money = money;
+    public void setMoneyId(Integer moneyId) {
+        this.moneyId = moneyId;
     }
 
     public Integer getStuCount() {
@@ -115,12 +215,29 @@ public class Teacher implements Serializable {
         this.courseCount = courseCount;
     }
 
-    public Integer getStuStatus() {
-        return stuStatus;
+
+    public String getDatestart() {
+        return Datestart;
     }
 
-    public void setStuStatus(Integer stuStatus) {
-        this.stuStatus = stuStatus;
+    public void setDatestart(String datestart) {
+        Datestart = datestart;
+    }
+
+    public String getDateend() {
+        return Dateend;
+    }
+
+    public void setDateend(String dateend) {
+        Dateend = dateend;
+    }
+
+    public String getShenfenzheng() {
+        return shenfenzheng;
+    }
+
+    public void setShenfenzheng(String shenfenzheng) {
+        this.shenfenzheng = shenfenzheng;
     }
 
     @Override
@@ -131,14 +248,24 @@ public class Teacher implements Serializable {
                 ", teaPhone='" + teaPhone + '\'' +
                 ", teaImg='" + teaImg + '\'' +
                 ", teaName='" + teaName + '\'' +
-                ", teaGrade='" + teaGrade + '\'' +
-                ", teaSubject=" + teaSubject +
+                ", subjectId=" + subjectId +
+                ", subName='" + subName + '\'' +
+                ", subjectname='" + subjectname + '\'' +
                 ", teaShow='" + teaShow + '\'' +
+                ", lvId=" + lvId +
                 ", createTime='" + createTime + '\'' +
-                ", money=" + money +
+                ", subjectTime='" + subjectTime + '\'' +
+                ", moneyId=" + moneyId +
                 ", stuCount=" + stuCount +
                 ", courseCount=" + courseCount +
-                ", stuStatus=" + stuStatus +
+                ", tealevelId=" + tealevelId +
+                ", shenfenzheng='" + shenfenzheng + '\'' +
+                ", identityimg='" + identityimg + '\'' +
+                ", subId=" + subId +
+                ", courseid=" + courseid +
+                ", teacherlevel='" + teacherlevel + '\'' +
+                ", Datestart='" + Datestart + '\'' +
+                ", Dateend='" + Dateend + '\'' +
                 '}';
     }
 }
