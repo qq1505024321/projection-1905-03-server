@@ -16,7 +16,23 @@
         and t.lvId=tl.teacherlevelid
         <include refid="searchSql"></include>
         order by t.createTime desc
+        SELECT
+        t.teaNumber,t.teaId,t.teaName,t.teaImg,t.teaShow,t.teaPhone,t.createTime,
+        t.courseCount,t.stuCount,cou.subName,s.subjectname,s.subjectTime,tl.teacherlevel
+        from
+        ht_teacher t,
+        t_subject s,
+        t_teacher_level tl,
+        t_course cou,
+        subject_course_center scc
+        WHERE t.subjectId = s.subjectid
+        and t.lvId = tl.teacherlevelid
+        and s.subjectid = scc.subjuctId
+        and scc.courseId = cou.subId
     </select>
+    <delete id="deleteTeacherByIds" parameterType="string">
+        delete from ht_teacher where userId in (${ids})
+    </delete>
 
     <sql id="searchSql">
         <if test="teaName != null and teaName != ''">

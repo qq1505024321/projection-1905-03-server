@@ -119,15 +119,20 @@
                         {field:'createTime',title:'注册时间'},
                         {field:'subjectTime',title:'开课时间'},
                         {field:'teacherlevel',title:'老师等级'},
-                        {field:'123',title:'操作',formatter:function(value,row,index){
-                                return '<button class="btn btn-link" onclick="deleteTeacherById('+ row.teaId +',\''+row.teaName+'\')" >删除</button>';
-                            }}
+                        {
+                            field: '123', title: '操作', formatter: function (value, row, index) {
+                                return '<button class="btn btn-link" onclick="deleteTeacherById(' + row.teaId + ',\'' + row.teaName + '\')" >删除</button>';
+                            }
+                        }
                     ]
                 ]
             })
         }
 
-        // 单删
+
+
+            // 单删
+
         function deleteTeacherById(id, realname) {
             bootbox.confirm({
                 size: "small",
@@ -151,6 +156,7 @@
                             dataType: "json",
                             success: function (msg) {
                                 if (msg > 0) {
+
                                     $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
                                 }
 

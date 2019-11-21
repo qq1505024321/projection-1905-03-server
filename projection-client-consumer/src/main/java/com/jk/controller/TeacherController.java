@@ -25,6 +25,7 @@ public class TeacherController {
         return teacherService.queryTeacher(page,rows,teacher);
     }
 
+
     /*这是查询老师等级的方法*/
     @RequestMapping("queryTeacherLv")
     @ResponseBody
@@ -38,6 +39,7 @@ public class TeacherController {
     public List queryTeacherCourse(){
         return teacherService.queryTeacherCourse();
     }
+
 
     /*这是删除老师的方法*/
     @RequestMapping("deleteTeacherByIds")

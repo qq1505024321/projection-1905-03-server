@@ -72,4 +72,5 @@ public class TeacherServiceImpl implements TeacherService {
     public List queryTeacherCourse() {
         return teacherMapper.queryTeacherCourse();
     }
+
 }

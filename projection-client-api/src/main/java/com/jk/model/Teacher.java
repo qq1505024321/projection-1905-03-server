@@ -45,63 +45,13 @@ public class Teacher implements Serializable {
     private Integer subId;
 
     private Integer courseid;
-
     /*临时字段老师等级*/
     private String teacherlevel;
-
-    public Integer getLvId() {
-        return lvId;
-    }
-
-    public void setLvId(Integer lvId) {
-        this.lvId = lvId;
-    }
-
-    public Integer getCourseid() {
-        return courseid;
-    }
-
-    public void setCourseid(Integer courseid) {
-        this.courseid = courseid;
-    }
-
-
-    public String getIdentityimg() {
-        return identityimg;
-    }
-
-    public void setIdentityimg(String identityimg) {
-        this.identityimg = identityimg;
-    }
-
-    public Integer getSubId() {
-        return subId;
-    }
-
-    public void setSubId(Integer subId) {
-        this.subId = subId;
-    }
-
-    public Integer getTealevelId() {
-        return tealevelId;
-    }
-
-    public void setTealevelId(Integer tealevelId) {
-        this.tealevelId = tealevelId;
-    }
-
-    public String getTeacherlevel() {
-        return teacherlevel;
-    }
-
-    public void setTeacherlevel(String teacherlevel) {
-        this.teacherlevel = teacherlevel;
-    }
-
     /*临时字段条查使用*/
     private String Datestart;
 
     private String Dateend;
+
 
     public Integer getTeaId() {
         return teaId;
@@ -143,14 +93,6 @@ public class Teacher implements Serializable {
         this.teaName = teaName;
     }
 
-    public String getSubjectname() {
-        return subjectname;
-    }
-
-    public void setSubjectname(String subjectname) {
-        this.subjectname = subjectname;
-    }
-
     public Integer getSubjectId() {
         return subjectId;
     }
@@ -167,12 +109,12 @@ public class Teacher implements Serializable {
         this.subName = subName;
     }
 
-    public String getSubjectTime() {
-        return subjectTime;
+    public String getSubjectname() {
+        return subjectname;
     }
 
-    public void setSubjectTime(String subjectTime) {
-        this.subjectTime = subjectTime;
+    public void setSubjectname(String subjectname) {
+        this.subjectname = subjectname;
     }
 
     public String getTeaShow() {
@@ -183,12 +125,28 @@ public class Teacher implements Serializable {
         this.teaShow = teaShow;
     }
 
+    public Integer getLvId() {
+        return lvId;
+    }
+
+    public void setLvId(Integer lvId) {
+        this.lvId = lvId;
+    }
+
     public String getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSubjectTime() {
+        return subjectTime;
+    }
+
+    public void setSubjectTime(String subjectTime) {
+        this.subjectTime = subjectTime;
     }
 
     public Integer getMoneyId() {
@@ -215,6 +173,53 @@ public class Teacher implements Serializable {
         this.courseCount = courseCount;
     }
 
+    public Integer getTealevelId() {
+        return tealevelId;
+    }
+
+    public void setTealevelId(Integer tealevelId) {
+        this.tealevelId = tealevelId;
+    }
+
+    public String getShenfenzheng() {
+        return shenfenzheng;
+    }
+
+    public void setShenfenzheng(String shenfenzheng) {
+        this.shenfenzheng = shenfenzheng;
+    }
+
+    public String getIdentityimg() {
+        return identityimg;
+    }
+
+    public void setIdentityimg(String identityimg) {
+        this.identityimg = identityimg;
+    }
+
+    public Integer getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Integer subId) {
+        this.subId = subId;
+    }
+
+    public Integer getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(Integer courseid) {
+        this.courseid = courseid;
+    }
+
+    public String getTeacherlevel() {
+        return teacherlevel;
+    }
+
+    public void setTeacherlevel(String teacherlevel) {
+        this.teacherlevel = teacherlevel;
+    }
 
     public String getDatestart() {
         return Datestart;
@@ -230,14 +235,6 @@ public class Teacher implements Serializable {
 
     public void setDateend(String dateend) {
         Dateend = dateend;
-    }
-
-    public String getShenfenzheng() {
-        return shenfenzheng;
-    }
-
-    public void setShenfenzheng(String shenfenzheng) {
-        this.shenfenzheng = shenfenzheng;
     }
 
     @Override
