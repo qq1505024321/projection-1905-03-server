@@ -39,6 +39,17 @@ public class MoneyController {
           return moneyService.queryTeacherMoney(page,rows,orders);
     }
 
+    @RequestMapping("toQueryMoney")
+    public String toQueryMoney(){
+        return "Order/showPlatformMoney";
+    }
+
+    @RequestMapping("queryPlatformMoney")
+    @ResponseBody
+    public JSONObject queryPlatformMoney(Integer page, Integer rows, Orders orders){
+        return moneyService.queryPlatformMoney(page,rows,orders);
+    }
+
 
 
 

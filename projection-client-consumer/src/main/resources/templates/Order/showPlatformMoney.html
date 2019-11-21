@@ -35,16 +35,30 @@
 <div id="toolbar" class="container">
     <div class="form-inline">
         <div class="form-group">
-            <label for="teacherName-money2">教师姓名</label>
-            <input type="text" id="teacherName-money2" class="form-control" placeholder="教师姓名" />
+          请选择月份：  <select class="form-control" id="month-id">
+                <option value="-1">请选择</option>
+                <option value="1">1月份</option>
+                <option value="2">2月份</option>
+                <option value="3">3月份</option>
+                <option value="4">4月份</option>
+                <option value="5">5月份</option>
+                <option value="6">6月份</option>
+                <option value="7">7月份</option>
+                <option value="8">8月份</option>
+                <option value="9">9月份</option>
+                <option value="10">10月份</option>
+                <option value="11">11月份</option>
+                <option value="12">12月份</option>
+            </select>
+
         </div>
-        <div class="form-group">
+      <!--  <div class="form-group">
             <label for="startDate-money2">注册日期</label>
             <input type="text" id="startDate-money2" class="form-control date" placeholder="开始日期" />-
             <input type="text" id="endDate-money2" class="form-control date" placeholder="结束日期" />
-        </div>
+        </div>-->
         <div class="form-group">
-            <button onclick="queryTeacherOrder()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+            <button onclick="queryPlatformMoney()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
     </div>
 </div>
@@ -79,21 +93,34 @@
                 return{
                     page:this.pageNumber,
                     rows:this.pageSize,
-                    teacher:$("#teacherName-money2").val(),
-                    createtime:$("#startDate-money2").val(),
-                    endDate:$("#endDate-money2").val(),
+                    teacher:null,
+                    currentmonth:$("#month-id").val()
                 };
             },
             columns:[
                 [
                     //{field:'111',title:'11',checkbox:true},
                     {field:'id',title:'编号'},
-                    {field:'price',title:'订单金额'},
-                    {field:'money',title:'平台收入'},
-                    {field:'createtime',title:'订单时间'},
-                    {field:'123',title:'操作',formatter:function(value,row,index){
+                    {field:'money',title:'当月交易金额'},
+                 /*   {field:'money',title:'单月平台',
+                        formatter:function(value,row,index){
+                             return row.price;
+                        }
+                    },*/
+                    {field:'aaa',title:'当月平台收益',
+                        formatter:function(value,row,index){
+                            return row.money*0.1+"元";
+                        }
+                    },
+                    {field:'currentmonth',title:'月份',
+                        formatter:function(value,row,index){
+                            return value+"月";
+                        }
+                    },
+                  //  {field:'createtime',title:'订单时间'},
+                 /*   {field:'123',title:'操作',formatter:function(value,row,index){
                             return '<button class="btn btn-link" onclick="deleteUserById('+ row.id +',\''+row.userName+'\')" >删除</button>';
-                        }}
+                        }}*/
                 ]
             ]
         })

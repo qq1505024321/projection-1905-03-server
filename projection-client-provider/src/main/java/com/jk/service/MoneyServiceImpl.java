@@ -38,4 +38,15 @@ public class MoneyServiceImpl implements  MoneyService{
             return json;
     }
 
+    @Override
+    public JSONObject queryPlatformMoney(Integer page, Integer rows, Orders orders) {
+        long total = moneyMapper.getCount(orders);
+        Integer start = (page-1)*rows;
+        JSONObject json = new JSONObject();
+        List<Orders> bookList = moneyMapper.queryPlatformMoney(orders,start,rows);
+        json.put("total", total);
+        json.put("rows", bookList);
+        return json;
+    }
+
 }

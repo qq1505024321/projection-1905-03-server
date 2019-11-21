@@ -7,4 +7,6 @@ import com.mongodb.util.JSON;
 public interface MoneyService {
 
     JSONObject queryTeacherMoney(Integer page, Integer rows, Orders orders);
+
+    JSONObject queryPlatformMoney(Integer page, Integer rows, Orders orders);
 }

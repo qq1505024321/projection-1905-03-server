@@ -38,13 +38,13 @@
             <label for="teacherName-money">教师姓名</label>
             <input type="text" id="teacherName-money" class="form-control" placeholder="教师姓名" />
         </div>
-        <div class="form-group">
+      <!--  <div class="form-group">
             <label for="startDate-money">注册日期</label>
             <input type="text" id="startDate-money" class="form-control date" placeholder="开始日期" />-
             <input type="text" id="endDate-money" class="form-control date" placeholder="结束日期" />
-        </div>
+        </div>-->
         <div class="form-group">
-            <button onclick="queryTeacherOrder()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+            <button onclick="queryTeacherMoney()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
     </div>
 </div>
@@ -80,8 +80,9 @@
                     page:this.pageNumber,
                     rows:this.pageSize,
                     teacher:$("#teacherName-money").val(),
-                    createtime:$("#startDate-money").val(),
-                    endDate:$("#endDate-money").val(),
+                    currentmonth:null
+                  /*  createtime:$("#startDate-money").val(),
+                    endDate:$("#endDate-money").val(),*/
                 };
             },
             columns:[
@@ -89,12 +90,21 @@
                     //{field:'111',title:'11',checkbox:true},
                     {field:'id',title:'编号'},
                     {field:'teacher',title:'教师姓名'},
-                    {field:'price',title:'订单金额'},
-                    {field:'money',title:'教师收入'},
-                    {field:'createtime',title:'订单时间'},
-                    {field:'123',title:'操作',formatter:function(value,row,index){
+                   // {field:'price',title:'订单金额'},
+                    {field:'money',title:'教师当月收入',
+                        formatter:function(value,row,index){
+                            return value*(1-0.1)+"元";
+                        }
+                    },
+                    {field:'currentmonth',title:'月份',
+                        formatter:function(value,row,index){
+                            return value+"月";
+                        }
+                    },
+                    //{field:'createtime',title:'订单时间'},
+                   /* {field:'123',title:'操作',formatter:function(value,row,index){
                             return '<button class="btn btn-link" onclick="deleteUserById('+ row.id +',\''+row.userName+'\')" >删除</button>';
-                        }}
+                        }}*/
                 ]
             ]
         })

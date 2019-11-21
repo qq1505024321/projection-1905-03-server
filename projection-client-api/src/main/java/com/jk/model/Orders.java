@@ -25,7 +25,27 @@ public class Orders implements Serializable {
     private String createtime;//下单时间
     private String subjectname;
 
+
+    private String money;
+    private String currentmonth;
+
     private String endDate;
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
+    public String getCurrentmonth() {
+        return currentmonth;
+    }
+
+    public void setCurrentmonth(String currentmonth) {
+        this.currentmonth = currentmonth;
+    }
 
     public Long getOrderNumber() {
         return orderNumber;
