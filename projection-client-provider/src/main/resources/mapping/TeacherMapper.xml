@@ -30,6 +30,7 @@
         and s.subjectid = scc.subjuctId
         and scc.courseId = cou.subId
     </select>
+
     <delete id="deleteTeacherByIds" parameterType="string">
         delete from ht_teacher where userId in (${ids})
     </delete>
@@ -49,9 +50,6 @@
         </if>
     </sql>
 
-    <delete id="deleteTeacherByIds" parameterType="string">
-        delete from ht_teacher where userId in (${ids})
-    </delete>
 
     <delete id="deleteTeacherAppById" parameterType="string">
         delete from t_application where appid in (${ids})
