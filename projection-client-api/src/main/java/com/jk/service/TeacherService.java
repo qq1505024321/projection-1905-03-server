@@ -22,4 +22,9 @@ public interface TeacherService {
     Applica queryByApplica(Integer id);
 
     void addTeacher(Teacher te);
+
+    void deleteTeacherAppById(String ids);
+
+    List queryTeacherCourse();
+
 }

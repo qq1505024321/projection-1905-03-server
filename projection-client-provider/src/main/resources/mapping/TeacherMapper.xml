@@ -3,26 +3,24 @@
 <mapper namespace="com.jk.mapper.TeacherMapper" >
 
     <select id="queryTeacher" resultType="com.jk.model.Teacher">
-        SELECT
-        t.teaNumber,t.teaId,t.teaName,t.teaImg,t.teaShow,t.teaPhone,t.createTime,
-        t.courseCount,t.stuCount,cou.subName,s.subjectname,s.subjectTime,tl.teacherlevel
-        from
-        ht_teacher t,
+        select
+        t.teaId,t.teaNumber,t.teaImg,t.teaName,t.teaPhone,
+        t.teaShow,t.shenfenzheng,t.identityimg,t.createTime,
+        c.subName,s.subjectTime,tl.teacherlevel
+        from ht_teacher t,
+        t_course c,
         t_subject s,
-        t_teacher_level tl,
-        t_course cou,
-        subject_course_center scc
-        WHERE t.subjectId = s.subjectid
-        and t.lvId = tl.teacherlevelid
-        and s.subjectid = scc.subjuctId
-        and scc.courseId = cou.subId
+        t_teacher_level tl
+        where t.courseid = c.subId
+        and t.subjectid=s.subjectid
+        and t.lvId=tl.teacherlevelid
         <include refid="searchSql"></include>
         order by t.createTime desc
     </select>
 
     <sql id="searchSql">
         <if test="teaName != null and teaName != ''">
-            and teaName like '%${teaName}%'
+            and teaName like '%${teaName}%'0
         </if>
         <if test="Datestart != null and Datestart != ''">
             and createTime &gt;= #{Datestart}
@@ -39,8 +37,16 @@
         delete from ht_teacher where userId in (${ids})
     </delete>
 
+    <delete id="deleteTeacherAppById" parameterType="string">
+        delete from t_application where appid in (${ids})
+    </delete>
+
     <select id="queryTeacherLv" resultType="com.jk.model.TeacherLv">
         select t.teacherlevelid,t.teacherlevel from t_teacher_level t
+    </select>
+
+    <select id="queryTeacherCourse" resultType="java.util.List">
+        select t.subId,t.subName from t_course t
     </select>
 
     <select id="queryApplication" resultType="com.jk.model.Applica">
@@ -50,8 +56,21 @@
         ta.createtime,tc.subName,ta.teachershow
         from t_application ta,t_course tc,t_teacher_level lv
         where ta.courseid=tc.subId and ta.teacherlevelid=lv.teacherlevelid
+        <include refid="searchAppSql"></include>
         order by ta.createtime desc,ta.appstatus
     </select>
+
+    <sql id="searchAppSql">
+        <if test="teachername != null and teachername != ''">
+            and teachername like '%${teachername}%'
+        </if>
+        <if test="shenfenzheng != null and shenfenzheng != ''">
+            and shenfenzheng like '%${shenfenzheng}%'
+        </if>
+        <if test="courseid != null and courseid != 0">
+            and subId = #{courseid}
+        </if>
+    </sql>
 
     <update id="updateAppStatus">
         update t_application set appstatus=#{flag} where appid=#{id}

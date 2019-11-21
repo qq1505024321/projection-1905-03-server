@@ -62,4 +62,14 @@ public class TeacherServiceImpl implements TeacherService {
     public void addTeacher(Teacher te) {
         teacherMapper.addTeacher(te);
     }
+
+    @Override
+    public void deleteTeacherAppById(String ids) {
+        teacherMapper.deleteTeacherAppById(ids);
+    }
+
+    @Override
+    public List queryTeacherCourse() {
+        return teacherMapper.queryTeacherCourse();
+    }
 }

@@ -32,11 +32,26 @@ public class TeacherController {
         return teacherService.queryTeacherLv();
     }
 
+    /*这是查询老师等级的方法*/
+    @RequestMapping("queryTeacherCourse")
+    @ResponseBody
+    public List queryTeacherCourse(){
+        return teacherService.queryTeacherCourse();
+    }
+
     /*这是删除老师的方法*/
     @RequestMapping("deleteTeacherByIds")
     @ResponseBody
     public int deleteTeacherByIds(String ids){
         teacherService.deleteTeacherByIds(ids);
+        return 1 ;
+    }
+
+    /*这是删除老师审核的方法*/
+    @RequestMapping("deleteTeacherAppById")
+    @ResponseBody
+    public int deleteTeacherAppById(String ids){
+        teacherService.deleteTeacherAppById(ids);
         return 1 ;
     }
 
@@ -46,6 +61,7 @@ public class TeacherController {
     public Map<String,Object> queryApplication(Integer page, Integer rows, Applica applica){
         return  teacherService.queryApplication(page,rows,applica);
     }
+
 
     /*这是修改审核状态的方法*/
     @RequestMapping("updateAppStatus")

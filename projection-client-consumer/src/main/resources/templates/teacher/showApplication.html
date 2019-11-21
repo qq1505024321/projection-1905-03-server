@@ -32,6 +32,30 @@
 
 </head>
 <body>
+<div id="toolbar" class="container">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="teachername">姓名</label>
+            <input type="text" id="teachername" class="form-control" placeholder="姓名" />
+        </div>
+        <div class="form-group">
+            <label for="shenfenzheng">身份证号</label>
+            <input type="text" id="shenfenzheng" class="form-control" placeholder="身份证号" />
+        </div>
+        <div class="form-group">
+            <label for="courseid">所带年级</label>
+            <select id="courseid" class="form-control" >
+                <option value="0">请选择</option>
+                <option value="1">语文</option>
+                <option value="2">数学</option>
+                <option value="3">英语</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button onclick="queryApplication()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+        </div>
+    </div>
+</div>
     <table class="table" id="myTable"></table>
 <script>
     $(function(){
@@ -41,6 +65,7 @@
         $("#myTable").bootstrapTable("refresh",{'pageNumber':1});
         //列表展示
         $('#myTable').bootstrapTable({
+            toolbar:'#toolbar',
             url:'../teacher/queryApplication',//获取数据地址
             pagination:true, //是否展示分页
             pageList:[2, 10, 20, 50],//分页组件
@@ -61,10 +86,9 @@
                 return{
                     page:this.pageNumber,
                     rows:this.pageSize,
-                    /*teaName:$("#teaName").val(),
-                    Datestart:$("#Datestart").val(),
-                    Dateend:$("#Dateend").val(),
-                    tealevelId:$("#tealevelId").val(),*/
+                    teachername:$("#teachername").val(),
+                    shenfenzheng:$("#shenfenzheng").val(),
+                    courseid:$("#courseid").val(),
                 };
             },
             columns:[
@@ -91,14 +115,48 @@
                             if(row.appstatus==1){
                                 return '</button><button class="btn btn-link" onclick="applicationPass('+ row.appid +',\''+row.teachername+'\',2)" >通过</button>'+
                                         '</button><button class="btn btn-link" onclick="applicationRefuse('+ row.appid +',\''+row.teachername+'\',3)" >拒绝</button>'+
-                                        '</button><button class="btn btn-link" onclick="deleteTeacherById('+ row.teaId +',\''+row.teaName+'\')" >删除</button>';
+                                        '</button><button class="btn btn-link" onclick="deleteTeacherAppById('+ row.appid +',\''+row.teachername+'\')" >删除</button>';
                             }else if(row.appstatus==2||row.appstatus==3){
-                                return '</button><button class="btn btn-link" onclick="deleteTeacherById('+ row.teaId +',\''+row.teaName+'\')" >删除</button>';
+                                return '</button><button class="btn btn-link" onclick="deleteTeacherAppById('+ row.appid +',\''+row.teachername+'\')" >删除</button>';
                             }
                         }}
                 ]
             ]
         })
+    }
+    // 单删
+    function deleteTeacherAppById(id, realname) {
+        bootbox.confirm({
+            size: "small",
+            message: "你确定要删除 " + realname + " 吗?",
+            buttons: {
+                confirm: {
+                    "label": "确认",
+                    "class": "btn-success",
+                },
+                cancel: {
+                    "label": "取消",
+                    "class": "btn-danger",
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "../teacher/deleteTeacherAppById",
+                        type: "post",
+                        data: {"ids": id},
+                        dataType: "json",
+                        success: function (msg) {
+                            if (msg > 0) {
+                                $("#myTable").bootstrapTable("refresh", {'pageNumber': 1});
+                            }
+
+                        }
+                    })
+                }
+            }
+        })
+
     }
 
     function applicationRefuse(id,teachername,flag){

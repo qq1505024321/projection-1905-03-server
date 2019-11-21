@@ -22,4 +22,9 @@ public interface TeacherMapper {
     Applica queryByApplica(Integer id);
 
     void addTeacher(Teacher te);
+
+    void deleteTeacherAppById(@Param("ids")String ids);
+
+    List queryTeacherCourse();
+
 }
