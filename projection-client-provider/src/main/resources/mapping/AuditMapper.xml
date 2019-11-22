@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.AuditMapper" >
+
+	<select id="queryTotal"  resultType="long">
+    select count(*) from t_subject
+    </select>
+
+	<select id="queryAudit" resultType="java.util.Map">
+		select * from
+		t_audit t1,t_course t2
+		where
+		t1.courseAudit=t2.subId
+		<include refid="searchSql"></include>
+		order by auditId   limit ${start},  ${rows}
+	</select>
+
+
+	<sql id="searchSql">
+
+		<if test="audit.auditName != null and audit.auditName != ''">
+			and auditName = #{audit.subjectName}
+		</if>
+		<if test="audit.startDate != null and audit.startDate != ''">
+			and auditTime &gt; #{audit.startDate}
+		</if>
+		<if test="audit.endDate != null and audit.endDate != ''">
+			and auditTime &lt;= #{audit.endDate}
+		</if>
+
+	</sql>
+
+
+	<delete id="deleteAudit" parameterType="string">
+  	delete from t_audit  where auditId in (${ids})
+    </delete>
+
+
+
+
+	<update id="updateAppSubject">
+        update t_audit set auditStatus=#{flag} where auditId=#{id}
+    </update>
+
+	<select id="queryByAudit" resultType="com.jk.model.Audit" parameterType="int">
+        select
+         *
+         from t_audit  where auditId=#{id}
+    </select>
+
+	<insert id="addSubject" parameterType="com.jk.model.Subject" >
+		<selectKey resultType="java.lang.Integer" keyProperty="subjectId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+
+        insert into t_subject
+        (
+        subjectname,subjectTime
+        )
+        values
+        (#{subjectName},#{subjectTime})
+    </insert>
+
+	<select id="querySubjectidByName" resultType="java.lang.Integer">
+
+		select subjectId from t_subject where subjectname = #{name}
+
+	</select>
+
+	<insert id="addScCenter" parameterType="com.jk.model.SubjectCourse"  >
+        insert into subject_course_center
+        (
+        subjuctId,courseId
+        )
+        values
+        (#{subjuctId},#{courseId})
+    </insert>
+
+
+
+    <!--<select id="querysum" resultType="int">
+        select count(*) from t_book
+    </select>
+
+    <select id="queryBook" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookList" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookByName" resultType="com.jk.model.Book">
+        select ${value} from t_book
+    </select>
+
+    <select id="queryById" resultType="com.jk.model.Book" parameterType="int">
+        select * from t_book where bookId=#{id}
+    </select>
+
+    <insert id="addBook" parameterType="com.jk.model.Book" >
+        insert into t_book(bookName,bookPrice,bookType) values (#{bookName},#{bookPrice},#{bookType})
+    </insert>
+
+    <delete id="deleteBook" parameterType="int">
+        delete from t_book where bookId=#{id}
+    </delete>
+
+    <update id="updateBook" parameterType="com.jk.model.Book">
+        update t_book set bookName=#{bookName},bookPrice=#{bookPrice},bookType=#{bookType} where bookId=#{bookId}
+    </update>
+
+    <insert id="addBookList" parameterType="java.util.List">
+        insert into t_book (bookName,bookPrice,bookType)
+        values
+        <foreach collection="list" item="l" separator=",">
+        (#{l.bookName},#{l.bookPrice},#{l.bookType})
+        </foreach>
+
+    </insert>-->
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.OrderMapper" >
+
+    <select id="queryTotal"  resultType="long">
+    select count(*) from t_order
+    </select>
+
+    <select id="queryOrder" resultType="com.jk.model.Order">
+
+        select * from t_order  where 1=1
+        <include refid="searchSql"></include>
+        order by id  limit ${start},  ${rows}
+    </select>
+
+    <sql id="searchSql">
+
+        <if test="order.teacher != null and order.teacher != '' ">
+        and teacher like '%${order.teacher}%'
+        </if>
+        <if test="order.startDate != null and order.startDate !='' ">
+            and createtime &gt; #{order.startDate}
+        </if>
+        <if test="order.endDate != null and order.endDate != '' ">
+            and createtime &lt;= #{order.endDate}
+        </if>
+
+    </sql>
+
+  <!--  <delete id="deleteCalssify" parameterType="string">
+  	delete from ht_classify  where classifyId in (${ids})
+    </delete>
+  -->
+    <!--<select id="querysum" resultType="int">
+        select count(*) from t_book
+    </select>
+
+    <select id="queryBook" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookList" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookByName" resultType="com.jk.model.Book">
+        select ${value} from t_book
+    </select>
+
+    <select id="queryById" resultType="com.jk.model.Book" parameterType="int">
+        select * from t_book where bookId=#{id}
+    </select>
+
+    <insert id="addBook" parameterType="com.jk.model.Book" >
+        insert into t_book(bookName,bookPrice,bookType) values (#{bookName},#{bookPrice},#{bookType})
+    </insert>
+
+    <delete id="deleteBook" parameterType="int">
+        delete from t_book where bookId=#{id}
+    </delete>
+
+    <update id="updateBook" parameterType="com.jk.model.Book">
+        update t_book set bookName=#{bookName},bookPrice=#{bookPrice},bookType=#{bookType} where bookId=#{bookId}
+    </update>
+
+    <insert id="addBookList" parameterType="java.util.List">
+        insert into t_book (bookName,bookPrice,bookType)
+        values
+        <foreach collection="list" item="l" separator=",">
+        (#{l.bookName},#{l.bookPrice},#{l.bookType})
+        </foreach>
+
+    </insert>-->
+</mapper>

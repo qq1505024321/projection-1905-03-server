@@ -230,7 +230,9 @@
 
         var id = 'tab_' + opts.id;
         var tab_li = a_target;
+
         console.log(tab_li);
+
         var tab_content = tab_li.next('.tab-content');
 
         tab_li.find('li[role = "presentation"].active').removeClass('active');

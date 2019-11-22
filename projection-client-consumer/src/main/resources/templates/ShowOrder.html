@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="../js/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="../js/bootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">
+    <link href="../js/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
+    <link href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../js/bootstrap-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="../js/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
+    <!--
+        <link rel="stylesheet" href="../js/uploadify/uploadify.css">
+    -->
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script src="../js/bootStrap-addTabs/bootstrap.addtabs.js"></script>
+    <script src="../js/bootstrap-table/dist/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+    <script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <!--<script type="text/javascript" src="../js/uploadify/jquery.uploadify.min.js"></script>-->
+
+    <script src="../js/bootstrap-bootbox/bootbox.js"></script>
+
+
+</head>
+<body>
+<div id="toolbar" class="container">
+    <div class="form-inline">
+
+        <div class="form-group">
+            <label for="teacher">课程目录</label>
+            <input type="text" id="teacher" class="form-control" placeholder="老师名称" />
+        </div>
+        <div class="form-group">
+            <label for="startDate">直播时间</label>
+            <input type="text" id="startDate" class="form-control date" placeholder="开始日期" />-
+            <input type="text" id="endDate" class="form-control date" placeholder="结束日期" />
+
+        </div>
+
+
+        <div class="form-group">
+            <button onclick="queryOrder()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+        </div>
+    </div>
+
+</div>
+
+
+<table class="table" id="exp-table" border="1"></table>
+<script type="text/javascript">
+
+    $(function(){
+        queryOrder();
+    })
+
+    function queryOrder(){
+        $("#exp-table").bootstrapTable("refresh",{'pageNumber':1});
+        $("#exp-table").bootstrapTable({
+            url:"../queryOrder",
+            striped: true,//隔行变色
+            showColumns:false,//是否显示 内容列下拉框
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            minimumCountColumns:2,//最小留几列 默认值1
+            showRefresh:false,//显示刷新按钮
+            showToggle:false,//显示切换视图
+            search:false,//是否显示搜索框
+            searchOnEnterKey:true,//设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
+            pagination:true,//开启分页
+            paginationLoop:true,//开启分页无限循环
+            pageNumber:1,//当前页数
+            pageSize:2,//每页条数
+            pageList:[1,5,10],//如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+            sidePagination:"server",//
+            method:'post',//发送请求的方式
+            contentType:"application/x-www-form-urlencoded",
+            queryParams:function(obj){
+
+                // return 的数据 是传递到 控制层类中的参数
+                return {
+
+                    page:this.pageNumber,//当前页
+                    rows:this.pageSize ,//每页条数
+
+                    teacher:$("#teacher").val(),
+                    startDate:$("#startDate").val(),
+                    endDate:$("#endDate").val()
+                }
+            },
+            columns: [
+                {field: 'id',title:'ID', width:100},
+                {field: 'orderNumber',title: '订单编号', width: 100},
+                {field: 'coursename',title: '课程类型', width: 100},
+                {field: 'courselevel',title: '课程等级', width: 100},
+                {field: 'teacher',title: '老师名称', width: 100},
+                {field: 'teacherlevel',title: '老师等级', width: 100},
+                {field: 'price',title: '价格', width: 100},
+                {field: 'createtime',title: '下单时间', width: 100},
+                {field: 'subjectname',title: '课程目录', width: 100}
+
+            ]
+        })
+    }
+
+
+    // 单删
+    function deleteSubjectByIds(classifyId, classifyName){
+        bootbox.confirm({
+            size: "small",
+            message: "你确定要删除 "+classifyName+" 吗?",
+            buttons: {
+                confirm: {
+                    "label": "确认",
+                    "class": "btn-success",
+                },
+                cancel: {
+                    "label": "取消",
+                    "class": "btn-danger",
+                }
+            },
+            callback: function(result){
+                if(result){
+                    $.ajax({
+                        url: "../deleteClassify",
+                        type: "post",
+                        data: {"ids":classifyId},
+                        dataType: "json",
+                        success:function(aa){
+                            if(aa>0){
+
+                                $("#exp-table").bootstrapTable("refresh", {'pageNumber': 1});
+                            }
+
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+
+</script>
+
+
+</body>
+</html>
