@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link href="../js/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../js/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+<link href="../js/bootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">
+<link href="../js/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
+<link href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+<link href="../js/bootstrap-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet">
+<link href="../js/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+<script src="../js/bootStrap-addTabs/bootstrap.addtabs.js"></script>
+<script src="../js/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="../js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+<script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+<script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+<!-- bootstrap 弹框 -->
+<script src="../js/bootstrap-bootbox/bootbox.js"></script>
+<!--日期插件-->
+<script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+</head>
+<body>
+<div id="toolbar" class="container">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="teacherName-money">教师姓名</label>
+            <input type="text" id="teacherName-money" class="form-control" placeholder="教师姓名" />
+        </div>
+      <!--  <div class="form-group">
+            <label for="startDate-money">注册日期</label>
+            <input type="text" id="startDate-money" class="form-control date" placeholder="开始日期" />-
+            <input type="text" id="endDate-money" class="form-control date" placeholder="结束日期" />
+        </div>-->
+        <div class="form-group">
+            <button onclick="queryTeacherMoney()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
+        </div>
+    </div>
+</div>
+<table class="table" id="myTable-money"></table>
+<script>
+    $(function(){
+        queryTeacherMoney();
+    })
+
+    function queryTeacherMoney(){
+        $("#myTable-money").bootstrapTable("refresh",{'pageNumber':1});
+        //列表展示
+        $('#myTable-money').bootstrapTable({
+            toolbar:'#toolbar',
+            url:'../money/queryTeacherMoney',//获取数据地址
+            pagination:true, //是否展示分页
+            pageList:[1, 6, 12, 18],//分页组件
+            pageNumber:1,
+            pageSize:8,//默认每页条数
+            //search:true,//是否显示搜索框
+            //searchText:'搜索',//初始化搜索文字
+            showColumns:false,//是否显示 内容列下拉框
+            showToggle:false,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            showRefresh:false,//是否显示刷新按钮
+            detailView:false,//设置为 true 可以显示详细页面模式。
+            showFooter:false,//是否显示列脚
+            clickToSelect: true, //是否启用点击选中行
+            sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
+            striped:true,
+            queryParams:function(){
+                return{
+                    page:this.pageNumber,
+                    rows:this.pageSize,
+                    teacher:$("#teacherName-money").val(),
+                    currentmonth:null
+                  /*  createtime:$("#startDate-money").val(),
+                    endDate:$("#endDate-money").val(),*/
+                };
+            },
+            columns:[
+                [
+                    //{field:'111',title:'11',checkbox:true},
+                    {field:'id',title:'编号'},
+                    {field:'teacher',title:'教师姓名'},
+                   // {field:'price',title:'订单金额'},
+                    {field:'money',title:'教师当月收入',
+                        formatter:function(value,row,index){
+                            return value*(1-0.1)+"元";
+                        }
+                    },
+                    {field:'currentmonth',title:'月份',
+                        formatter:function(value,row,index){
+                            return value+"月";
+                        }
+                    },
+                    //{field:'createtime',title:'订单时间'},
+                   /* {field:'123',title:'操作',formatter:function(value,row,index){
+                            return '<button class="btn btn-link" onclick="deleteUserById('+ row.id +',\''+row.userName+'\')" >删除</button>';
+                        }}*/
+                ]
+            ]
+        })
+    }
+
+   </script>
+</body>
+</html>

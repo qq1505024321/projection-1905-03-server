@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.TeacherMapper" >
+
+    <select id="queryTeacher" resultType="com.jk.model.Teacher">
+        select
+        t.teaId,t.teaNumber,t.teaImg,t.teaName,t.teaPhone,
+        t.teaShow,t.shenfenzheng,t.identityimg,t.createTime,
+        c.subName,s.subjectTime,tl.teacherlevel
+        from ht_teacher t,
+        t_course c,
+        t_subject s,
+        t_teacher_level tl
+        where t.courseid = c.subId
+        and t.subjectid=s.subjectid
+        and t.lvId=tl.teacherlevelid
+        <include refid="searchSql"></include>
+        order by t.createTime desc
+    </select>
+
+    <delete id="deleteTeacherByIds" parameterType="string">
+        delete from ht_teacher where userId in (${ids})
+    </delete>
+
+    <sql id="searchSql">
+        <if test="teaName != null and teaName != ''">
+            and teaName like '%${teaName}%'0
+        </if>
+        <if test="Datestart != null and Datestart != ''">
+            and createTime &gt;= #{Datestart}
+        </if>
+        <if test="Dateend != null and Dateend != ''">
+            and createTime &lt;= #{Dateend}
+        </if>
+        <if test="tealevelId != null and tealevelId != 0">
+            and teacherlevelid = #{tealevelId}
+        </if>
+    </sql>
+
+
+    <delete id="deleteTeacherAppById" parameterType="string">
+        delete from t_application where appid in (${ids})
+    </delete>
+
+    <select id="queryTeacherLv" resultType="com.jk.model.TeacherLv">
+        select t.teacherlevelid,t.teacherlevel from t_teacher_level t
+    </select>
+
+    <select id="queryTeacherCourse" resultType="java.util.List">
+        select t.subId,t.subName from t_course t
+    </select>
+
+    <select id="queryApplication" resultType="com.jk.model.Applica">
+        select
+        ta.appid,ta.teachername,lv.teacherlevel,ta.shenfenzheng,
+        ta.identityimg,ta.certification,ta.appstatus,
+        ta.createtime,tc.subName,ta.teachershow
+        from t_application ta,t_course tc,t_teacher_level lv
+        where ta.courseid=tc.subId and ta.teacherlevelid=lv.teacherlevelid
+        <include refid="searchAppSql"></include>
+        order by ta.createtime desc,ta.appstatus
+    </select>
+
+    <sql id="searchAppSql">
+        <if test="teachername != null and teachername != ''">
+            and teachername like '%${teachername}%'
+        </if>
+        <if test="shenfenzheng != null and shenfenzheng != ''">
+            and shenfenzheng like '%${shenfenzheng}%'
+        </if>
+        <if test="courseid != null and courseid != 0">
+            and subId = #{courseid}
+        </if>
+    </sql>
+
+    <update id="updateAppStatus">
+        update t_application set appstatus=#{flag} where appid=#{id}
+    </update>
+
+    <select id="queryByApplica" resultType="com.jk.model.Applica" parameterType="int">
+        select
+         t.teachername,t.teacherlevelid,t.shenfenzheng,t.identityimg,
+         t.certification,t.appstatus,t.createtime,t.courseid,t.teachershow,
+         t.teacherphone,t.teacherimg
+         from t_application t where t.appid=#{id}
+    </select>
+
+    <insert id="addTeacher" parameterType="com.jk.model.Teacher" >
+        insert into ht_teacher
+        (teaName,subjectId,teaShow,createTime,courseCount,
+         stuCount,lvId,shenfenzheng,identityimg,courseid,
+         teaPhone,teaNumber,teaImg
+        )
+        values
+        (#{teaName},#{subjectId},#{teaShow},sysdate(),#{courseCount},
+        #{stuCount},#{lvId},#{shenfenzheng},#{identityimg},
+        #{courseid},#{teaPhone},#{teaNumber},#{teaImg})
+    </insert>
+
+
+    <!--<select id="queryUserByUsername" resultType="com.jk.model.UserHt">
+        select * from ht_user t where t.userName=#{userName}
+    </select>
+-->
+    <!--<select id="querysum" resultType="int">
+        select count(*) from t_book
+    </select>
+
+    <select id="queryBook" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookList" resultType="com.jk.model.Book">
+        select * from t_book
+    </select>
+
+    <select id="queryBookByName" resultType="com.jk.model.Book">
+        select ${value} from t_book
+    </select>
+
+    <select id="queryById" resultType="com.jk.model.Book" parameterType="int">
+        select * from t_book where bookId=#{id}
+    </select>
+
+    <insert id="addBook" parameterType="com.jk.model.Book" >
+        insert into t_book(bookName,bookPrice,bookType) values (#{bookName},#{bookPrice},#{bookType})
+    </insert>
+
+    <delete id="deleteBook" parameterType="int">
+        delete from t_book where bookId=#{id}
+    </delete>
+
+    <update id="updateBook" parameterType="com.jk.model.Book">
+        update t_book set bookName=#{bookName},bookPrice=#{bookPrice},bookType=#{bookType} where bookId=#{bookId}
+    </update>
+
+    <insert id="addBookList" parameterType="java.util.List">
+        insert into t_book (bookName,bookPrice,bookType)
+        values
+        <foreach collection="list" item="l" separator=",">
+        (#{l.bookName},#{l.bookPrice},#{l.bookType})
+        </foreach>
+
+    </insert>-->
+</mapper>
