@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jk.mapper.TeacherMapper;
 import com.jk.model.Applica;
+import com.jk.model.CourseMin;
 import com.jk.model.Teacher;
 import com.jk.model.TeacherLv;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List queryTeacherCourse() {
         return teacherMapper.queryTeacherCourse();
+    }
+
+    @Override
+    public List<CourseMin> queryCourse() {
+        return teacherMapper.queryCourse();
     }
 
 }

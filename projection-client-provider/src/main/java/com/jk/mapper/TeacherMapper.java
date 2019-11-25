@@ -1,6 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.model.Applica;
+import com.jk.model.CourseMin;
 import com.jk.model.Teacher;
 import com.jk.model.TeacherLv;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +12,7 @@ public interface TeacherMapper {
 
     List<Teacher> queryTeacher(Teacher teacher);
 
-    void deleteTeacherByIds(String ids);
+    void deleteTeacherByIds(@Param("ids")String ids);
 
     List<TeacherLv> queryTeacherLv();
 
@@ -26,5 +27,7 @@ public interface TeacherMapper {
     void deleteTeacherAppById(@Param("ids")String ids);
 
     List queryTeacherCourse();
+
+    List<CourseMin> queryCourse();
 
 }

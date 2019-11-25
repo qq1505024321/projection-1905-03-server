@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.model.Applica;
+import com.jk.model.CourseMin;
 import com.jk.model.Teacher;
 import com.jk.model.TeacherLv;
 
@@ -26,5 +27,7 @@ public interface TeacherService {
     void deleteTeacherAppById(String ids);
 
     List queryTeacherCourse();
+
+    List<CourseMin> queryCourse();
 
 }

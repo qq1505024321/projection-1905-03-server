@@ -51,7 +51,7 @@
                 <button onclick="queryShowTeacher()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
             </div>
         </div>
-        <button id="addUser" onclick="saveUserDialog()" class="btn btn-success glyphicon glyphicon-save">新增</button>
+
     </div>
 
     <table class="table" id="myTable"></table>
@@ -111,7 +111,11 @@
                     [
                         {field:'111',title:'11',checkbox:true},
                         {field:'teaNumber',title:'老师编号'},
-                        {field:'teaImg',title:'头像'},
+                        {field:'teaImg',title:'头像',formatter: function (value, row, index) {
+                                return '<img width="50px" src="'+value+'"/>';
+                            }
+
+                        },
                         {field:'teaPhone',title:'手机号'},
                         {field:'teaName',title:'姓名'},
                         {field:'subName',title:'课程类型'},
@@ -152,7 +156,7 @@
                         $.ajax({
                             url: "../teacher/deleteTeacherByIds",
                             type: "post",
-                            data: {"ids": id},
+                            data: {"ids":id},
                             dataType: "json",
                             success: function (msg) {
                                 if (msg > 0) {

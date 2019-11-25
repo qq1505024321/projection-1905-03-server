@@ -19,7 +19,7 @@
     </select>
 
     <delete id="deleteTeacherByIds" parameterType="string">
-        delete from ht_teacher where userId in (${ids})
+        delete from ht_teacher where teaId in (${ids})
     </delete>
 
     <sql id="searchSql">
@@ -47,6 +47,10 @@
     </select>
 
     <select id="queryTeacherCourse" resultType="java.util.List">
+        select t.subId,t.subName from t_course t
+    </select>
+
+    <select id="queryCourse" resultType="com.jk.model.CourseMin">
         select t.subId,t.subName from t_course t
     </select>
 

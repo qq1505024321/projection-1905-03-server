@@ -2,6 +2,7 @@ package com.jk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Applica;
+import com.jk.model.CourseMin;
 import com.jk.model.Teacher;
 import com.jk.model.TeacherLv;
 import com.jk.service.TeacherService;
@@ -18,6 +19,13 @@ import java.util.Map;
 public class TeacherController {
     @Reference
     private TeacherService teacherService;
+
+    /*这是查询课程的方法*/
+    @RequestMapping("queryCourse")
+    @ResponseBody
+    public List<CourseMin> queryCourse(){
+        return teacherService.queryCourse();
+    }
     /*这是查询老师的信息*/
     @RequestMapping("queryTeacher")
     @ResponseBody

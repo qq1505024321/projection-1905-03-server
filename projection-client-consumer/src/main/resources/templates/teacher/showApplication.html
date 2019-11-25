@@ -43,12 +43,9 @@
             <input type="text" id="shenfenzheng" class="form-control" placeholder="身份证号" />
         </div>
         <div class="form-group">
-            <label for="courseid">所带年级</label>
-            <select id="courseid" class="form-control" >
-                <option value="0">请选择</option>
-                <option value="1">语文</option>
-                <option value="2">数学</option>
-                <option value="3">英语</option>
+            <label for="courseid">所带课程</label>
+            <select id="courseid" name="courseid" class="form-control" >
+
             </select>
         </div>
         <div class="form-group">
@@ -60,7 +57,23 @@
 <script>
     $(function(){
         queryApplication();
+        querycourse();
     })
+
+    function querycourse(){
+        $.ajax({
+            url:"../teacher/queryCourse",
+            type: "post",
+            dataType: "json",
+            success: function(data){
+                var html = "<option value=0>请选择</option>";
+                for(var i=0; i<data.length; i++){
+                    html += "<option value='"+data[i].subId+"' onchange='showkemu(this.value)'>"+data[i].subName+"</option>";
+                }
+                $("#courseid").html(html);
+            }
+        })
+    }
     function queryApplication(){
         $("#myTable").bootstrapTable("refresh",{'pageNumber':1});
         //列表展示
@@ -97,8 +110,12 @@
                     {field:'teachername',title:'老师姓名'},
                     {field:'teacherlevel',title:'老师等级'},
                     {field:'shenfenzheng',title:'身份证号'},
-                    {field:'identityimg',title:'身份证图片'},
-                    {field:'certification',title:'资质证书'},
+                    {field:'identityimg',title:'身份证图片',formatter: function (value, row, index) {
+                            return '<img width="50px" src="'+value+'"/>';
+                        }},
+                    {field:'certification',title:'资质证书',formatter: function (value, row, index) {
+                            return '<img width="50px" src="'+value+'"/>';
+                        }},
                     {field:'appstatus',title:'申请状态',formatter:function(value,row,index) {
                             if(value==1){
                                 return "审核中"
