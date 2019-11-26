@@ -54,16 +54,11 @@
             <button onclick="queryCourse()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
     </div>
-
-
+    <!--<button onclick="addCourse()" class="btn btn-primary glyphicon glyphicon-save">新增</button>-->
 </div>
 
 <table class="table" id="exp-table" border="1"></table>
 <script type="text/javascript">
-
-    $(function(){
-        queryCourse();
-    })
 
     function queryCourse(){
         $("#exp-table").bootstrapTable("refresh",{'pageNumber':1});
@@ -80,19 +75,16 @@
             pagination:true,//开启分页
             paginationLoop:true,//开启分页无限循环
             pageNumber:1,//当前页数
-            pageSize:2,//每页条数
-            pageList:[1,5,10],//如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+            pageSize:3,//每页条数
+            pageList:[3,5,8,10],//如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
             sidePagination:"server",//
             method:'post',//发送请求的方式
             contentType:"application/x-www-form-urlencoded",
             queryParams:function(obj){
-
                 // return 的数据 是传递到 控制层类中的参数
                 return {
-
                     page:this.pageNumber,//当前页
                     rows:this.pageSize, //每页条数
-
 
                     subjectName:$("#subjectName").val(),
                     startDate:$("#startDate").val(),
@@ -103,6 +95,12 @@
                 {field: 'subjectId',title: '序号', width: 100},
                 {field: 'subName',title: '课程', width: 100},
                 {field: 'subjectName',title: '课程目录', width: 100},
+                {field: 'subImg',title: '课程封面', width: 100,
+                    formatter:function(value,row,index){
+                        return "<img src='"+value+"' width='150px' height='100px'>";
+                    }
+                },
+                {field: 'subInfo',title: '课程介绍', width: 100},
                 {field: 'subjectTime',title: '直播时间', width: 100},
                 {field: 'staName',title: '直播状态', width: 100},
                 {field: 'cz',title: '操作',width: 100,
@@ -116,10 +114,10 @@
     }
 
     //新增弹框
-    function saveUserDialog(){
+    function addAdvertising(){
         bootbox.dialog({
             title: "新增用户",
-            message: createAddContent("toAddCourse"),
+            message:  $('<div></div>').load('../advertising/toAddAdvertising'),
             closeButton: true,
             buttons: {
                 "success": {
@@ -127,12 +125,12 @@
                     "className": "btn btn-success",
                     "callback":function(){
                         $.ajax({
-                            url: "../addCourse",
+                            url: "../advertising/addAdvertising",
                             type: "post",
-                            data: $("#saveForm").serialize(),
+                            data: $("#addForm").serialize(),
                             dataType: "json",
                             success: function(data){
-                                $("#exp-table").bootstrapTable("refresh");
+                                $("#Advertising-table").bootstrapTable("refresh");
                             }
                         })
 
@@ -183,7 +181,7 @@
         })
     }
     var res;
-    function createAddContent(url){
+    function createAddAdvertising(url){
         $.ajax({
             url:url,
             async:false,
@@ -194,7 +192,9 @@
         return res;
     }
 
-
+    $(function(){
+        queryCourse();
+    })
 
 </script>
 

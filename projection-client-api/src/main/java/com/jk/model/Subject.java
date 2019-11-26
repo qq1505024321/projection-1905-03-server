@@ -12,9 +12,10 @@ public class Subject implements Serializable {
 
     private String  subjectTime;
 
-    private Integer  courseTypeId;
+    private Integer courseTypeId;
 
-    private String  staName;
+    // 业务字段
+    private String  staName;    //状态
 
     private String startDate;
 
@@ -23,6 +24,28 @@ public class Subject implements Serializable {
     private  Integer subId;
     //课程
     private  String subName;
+
+    private String  subImg;
+
+    private String  subInfo;
+
+    public String getSubImg() {
+        return subImg;
+    }
+
+    public void setSubImg(String subImg) {
+        this.subImg = subImg;
+    }
+
+
+
+    public String getSubInfo() {
+        return subInfo;
+    }
+
+    public void setSubInfo(String subInfo) {
+        this.subInfo = subInfo;
+    }
 
     public Integer getSubjectId() {
         return subjectId;
@@ -108,6 +131,8 @@ public class Subject implements Serializable {
                 ", endDate='" + endDate + '\'' +
                 ", subId=" + subId +
                 ", subName='" + subName + '\'' +
+                ", subImg='" + subImg + '\'' +
+                ", subInfo='" + subInfo + '\'' +
                 '}';
     }
 }

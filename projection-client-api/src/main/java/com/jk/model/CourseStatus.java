@@ -9,8 +9,6 @@ public class CourseStatus implements Serializable {
 
     private String  staName;
 
-    private Integer courseTypeId;
-
     public Integer getStaId() {
         return staId;
     }
@@ -27,20 +25,11 @@ public class CourseStatus implements Serializable {
         this.staName = staName;
     }
 
-    public Integer getCourseTypeId() {
-        return courseTypeId;
-    }
-
-    public void setCourseTypeId(Integer courseTypeId) {
-        this.courseTypeId = courseTypeId;
-    }
-
     @Override
     public String toString() {
         return "CourseStatus{" +
                 "staId=" + staId +
                 ", staName='" + staName + '\'' +
-                ", courseTypeId=" + courseTypeId +
                 '}';
     }
 }

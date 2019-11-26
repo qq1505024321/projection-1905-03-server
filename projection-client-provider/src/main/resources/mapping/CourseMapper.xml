@@ -7,11 +7,12 @@
     </select>
 
     <select id="queryCourse" resultType="com.jk.model.Subject">
-        select * from
-        t_subject s1,subject_course_center s2 ,subject_status s3 ,t_course s4
-        where s1.subjectId=s2.subjuctId  and s4.subId=s2.courseId and s2.courseId=s3.courseTypeId
+        select s1.subjectId,s4.subName,s1.subjectname,s4.subImg,s4.subInfo,s1.subjectTime,s3.staName
+        from t_subject s1,subject_course_center s2 ,subject_status s3 ,t_course s4
+        where s1.subjectId=s2.subjuctId  and s4.subId=s2.courseId and s3.subjectcoursecenterid=s1.courseTypeId
         <include refid="searchSql"></include>
-        order by subjectId   limit ${start},  ${rows}
+        order by s1.subjectId
+        limit ${start}, ${rows}
     </select>
 
 
