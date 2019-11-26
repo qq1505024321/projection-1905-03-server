@@ -94,14 +94,14 @@
                 }
             },
             columns: [
-                {field: 'id',title: '序号', width: 150},
-                {field: 'company',title: '公司名', width: 150},
-                {field: 'imgname',title: '图片', width: 150,
+                {field: 'id',title: '序号', width: 150,align:'center'},
+                {field: 'company',title: '公司名', width: 150,align:'center'},
+                {field: 'imgname',title: '图片', width: 150,align:'center',
                     formatter:function(value,row,index){
                         return "<img src='"+value+"' width='150' height='50'>";
                     }
                 },
-                {field: 'bgcolor',title: '背景色', width: 150,
+                {field: 'bgcolor',title: '背景色', width: 150,align:'center',
                     formatter:function(value,row,index){
                         if(value=="#76abba"){
                             return "浅蓝色";
@@ -114,8 +114,8 @@
                         }
                     }
                 },
-                {field: 'imgurl',title: '跳转页面', width: 150},
-                {field: 'status',title: '广告状态', width: 150,
+                {field: 'imgurl',title: '跳转页面', width: 150,align:'center'},
+                {field: 'status',title: '广告状态', width: 150,align:'center',
                     formatter:function(value,row,index){
                         if(value==1){
                             return "已续约";
@@ -124,7 +124,7 @@
                         }
                     }
                 },
-                {field: 'caozuo',title: '操作',width: 100,
+                {field: 'caozuo',title: '操作',width: 100,align:'center',
                     formatter:function(value,row,index){
                         var sss="";
                         if(row.status==1){
