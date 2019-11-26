@@ -45,14 +45,20 @@
         <div class="form-group">
             <button onclick="queryShowStudent()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
+        <button onclick="importStu()" class="btn btn-primary glyphicon glyphicon-search">导出</button>
     </div>
-    <button id="delUser" class="btn btn-danger glyphicon glyphicon-remove">删除</button>
 </div>
     <table class="table" id="myTable"></table>
 <script>
     $(function(){
         queryShowStudent();
     })
+
+    function importStu() {
+        var page = $('#myTable').bootstrapTable('getOptions').pageNumber;
+        var rows = $('#myTable').bootstrapTable('getOptions').pageSize;
+        location.href="../stu/export?page="+page+"&rows="+rows;
+    }
     function queryShowStudent(){
         $("#myTable").bootstrapTable("refresh",{'pageNumber':1});
         //列表展示

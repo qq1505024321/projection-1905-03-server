@@ -46,6 +46,7 @@
         <div class="form-group">
             <button onclick="queryTeacherMoney()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
+        <button onclick="importTeacherMoney()" class="btn btn-primary glyphicon glyphicon-search">导出</button>
     </div>
 </div>
 <table class="table" id="myTable-money"></table>
@@ -53,6 +54,11 @@
     $(function(){
         queryTeacherMoney();
     })
+    function importTeacherMoney() {
+        var page = $('#myTable-money').bootstrapTable('getOptions').pageNumber;
+        var rows = $('#myTable-money').bootstrapTable('getOptions').pageSize;
+        location.href="../money/exportTeacherMoney?page="+page+"&rows="+rows;
+    }
 
     function queryTeacherMoney(){
         $("#myTable-money").bootstrapTable("refresh",{'pageNumber':1});

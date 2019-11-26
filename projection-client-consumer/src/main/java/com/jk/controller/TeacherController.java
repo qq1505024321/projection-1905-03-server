@@ -6,10 +6,13 @@ import com.jk.model.CourseMin;
 import com.jk.model.Teacher;
 import com.jk.model.TeacherLv;
 import com.jk.service.TeacherService;
- import org.springframework.stereotype.Controller;
+import com.jk.util.ExportExcel;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +29,11 @@ public class TeacherController {
     public List<CourseMin> queryCourse(){
         return teacherService.queryCourse();
     }
+
     /*这是查询老师的信息*/
     @RequestMapping("queryTeacher")
     @ResponseBody
-    public Map<String,Object> queryUser(Integer page, Integer rows, Teacher teacher){
+    public Map<String,Object> queryTeacher(Integer page, Integer rows, Teacher teacher){
         return teacherService.queryTeacher(page,rows,teacher);
     }
 
@@ -100,6 +104,40 @@ public class TeacherController {
         return 1 ;
     }
 
+    /*这是学生导出*/
+    @RequestMapping("exportTeacher")
+    public void export(HttpServletResponse response, int page, int rows){
+        List<Teacher> list= new ArrayList<Teacher>();
+        try {
+            Teacher teacher = new Teacher();
+            Map<String, Object> stringObjectMap = teacherService.queryTeacher(page, rows, teacher);
+            list = (List<Teacher>) stringObjectMap.get("rows");
+            //定义表格的标题
+            String title ="奔奔在线教育平台老师展示";
+            //定义列名
+            String[] rowName={"主键","姓名","头像","手机号","课程类型","老师简介","注册时间","开课时间","老师等级"};
+            //定义工具类要的数据
+            List<Object[]>  dataList = new ArrayList<Object[]>();
+            //循环数据把数据存放到 List<Object[]>
+            for (Teacher tea:list) {
+                Object[] obj=new Object[rowName.length];
+                obj[0]=tea.getTeaId();
+                obj[1]=tea.getTeaName();
+                obj[2]=tea.getTeaImg();
+                obj[3]=tea.getTeaPhone();
+                obj[4]=tea.getSubName();
+                obj[5]=tea.getTeaShow();
+                obj[6]=tea.getCreateTime();
+                obj[7]=tea.getSubjectTime();
+                obj[8]=tea.getTeacherlevel();
+                dataList.add(obj);
+            }
+            ExportExcel exportExcel=new ExportExcel(title,rowName,dataList,response);
+            exportExcel.export();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

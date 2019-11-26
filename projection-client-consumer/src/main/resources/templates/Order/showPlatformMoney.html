@@ -60,6 +60,7 @@
         <div class="form-group">
             <button onclick="queryPlatformMoney()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
+        <button onclick="importPlat()" class="btn btn-primary glyphicon glyphicon-search">导出</button>
     </div>
 </div>
 <table class="table" id="myTable-money2"></table>
@@ -67,6 +68,12 @@
     $(function(){
         queryPlatformMoney();
     })
+
+    function importPlat() {
+        var page = $('#myTable-money2').bootstrapTable('getOptions').pageNumber;
+        var rows = $('#myTable-money2').bootstrapTable('getOptions').pageSize;
+        location.href="../money/exportPlat?page="+page+"&rows="+rows;
+    }
 
     function queryPlatformMoney(){
         $("#myTable-money2").bootstrapTable("refresh",{'pageNumber':1});

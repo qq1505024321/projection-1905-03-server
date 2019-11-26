@@ -51,7 +51,7 @@
                 <button onclick="queryShowTeacher()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
             </div>
         </div>
-
+        <button onclick="importTeacher()" class="btn btn-primary glyphicon glyphicon-search">导出</button>
     </div>
 
     <table class="table" id="myTable"></table>
@@ -60,6 +60,11 @@
             queryShowTeacher();
             initteacherLv();
         })
+        function importTeacher() {
+            var page = $('#myTable').bootstrapTable('getOptions').pageNumber;
+            var rows = $('#myTable').bootstrapTable('getOptions').pageSize;
+            location.href="../teacher/exportTeacher?page="+page+"&rows="+rows;
+        }
         /*查询老师等级*/
         function initteacherLv(){
             $.ajax({
