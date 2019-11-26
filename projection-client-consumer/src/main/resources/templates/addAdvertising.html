@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../js/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="../js/bootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">
+    <link href="../js/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
+    <link href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../js/bootstrap-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="../js/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script src="../js/bootStrap-addTabs/bootstrap.addtabs.js"></script>
+    <script src="../js/bootstrap-table/dist/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+    <script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+</head>
+<body>
+    <form class="form-horizontal" id="addForm">
+
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label for="gsname">公司名称</label>
+            </div>
+            <div class="col-md-10" >
+                <input type="text" name="company" id="gsname">
+            </div>
+        </div>
+
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label for="ggImg">广告图片</label>
+            </div>
+            <div class="col-md-10" >
+                <input type="hidden" id="testimg" name="imgname" />
+                <input type="file" class="projectfile" name="imgfile" id="ggImg">
+            </div>
+        </div>
+
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>背景颜色</label>
+            </div>
+            <div class="col-md-10" >
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="bgcolor" value="#76abba">浅蓝
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="bgcolor" value="#ee89ec">浅粉
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="bgcolor" value="#144074">暗蓝
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="bgcolor" value="#60080a">暗红
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label for="ggurl">跳转路径</label>
+            </div>
+            <div class="col-md-10" >
+                <input type="text" name="imgurl" id="ggurl">
+            </div>
+        </div>
+    </form>
+
+    <script>
+
+        //文件上传
+        function uploadify(){
+            $('#ggImg').fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: '../advertising/updaloadImg', //上传的地址
+                allowedFileExtensions: ['jpg', 'png', 'jpeg', 'gif', 'bmp','mp4'],//接收的文件后缀
+                showUpload: true, //是否显示上传按钮
+                showCaption: false,//是否显示标题
+                browseClass: "btn btn-primary", //按钮样式
+                maxFileCount: 5, //表示允许同时上传的最大文件个数
+                enctype: 'multipart/form-data',
+                validateInitialCount:true,
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            }).on('fileuploaded', function(event, data, previewId, index) {
+                alert(data.response.imgUrl)
+                var imgval = $('#testimg').val();
+                if(imgval == null || imgval == "" || imgval == undefined){
+                    imgval = data.response.imgUrl;
+                }else{
+                    imgval += ","+data.response.imgUrl;
+                }
+                $('#testimg').val(imgval);
+            });
+
+        }
+
+        $(function () {
+            uploadify();
+        })
+    </script>
+</body>
+</html>

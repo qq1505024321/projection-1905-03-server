@@ -82,4 +82,11 @@ public class ToPageController {
     public String toQueryMoney(){
         return "Order/showPlatformMoney";
     }
+
+    //这是跳转广告商的方法
+    @RequestMapping("toAdvertising")
+    public String toAdvertising(){
+        return "showAdvertising";
+    }
+
 }
