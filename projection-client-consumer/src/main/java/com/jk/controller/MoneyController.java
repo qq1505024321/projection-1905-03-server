@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +121,38 @@ public class MoneyController {
         }
     }
 
+    @RequestMapping("queryCakeMoney")
+    @ResponseBody
+    public List<Map<String,Object>> queryCakeMoney(){
+        List<Map<String,Object>> map1 =moneyService.queryCakeMoney();
+        List<Map<String,Object>> map2 =new ArrayList<Map<String,Object>>();
+        for (Map<String,Object> map:map1) {
+            Map<String,Object> map3=new HashMap<>();
+            map3.put("y",map.get("y"));
+            if(map.get("老师姓名").toString().equals("cxf")){
+                map3.put("name","cxf");
+                map3.put("sliced",true);
+                map3.put("selected",true);
+            }else if(map.get("老师姓名").toString().equals("张三")){
+                map3.put("name","张三");
+            }else if(map.get("老师姓名").toString().equals("李四")){
+                map3.put("name","李四");
+            }else if(map.get("老师姓名").toString().equals("陈光")){
+                map3.put("name","陈光");
+            }else if(map.get("老师姓名").toString().equals("陈晓峰")){
+                map3.put("name","陈晓峰");
+            }else if(map.get("老师姓名").toString().equals("王五")){
+                map3.put("name","王五");
+            }else if(map.get("老师姓名").toString().equals("ycx")){
+                map3.put("name","ycx");
+            }else {
+                map3.put("name","阿华1");
+            }
+            map2.add(map3);
+        }
+        return map2;
 
+    }
 
 
 

@@ -4,6 +4,7 @@ import com.jk.model.Orders;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MoneyMapper {
 
@@ -14,4 +15,6 @@ public interface MoneyMapper {
     long getTeacherMoneyCount(@Param("orders")Orders orders);
 
     long getPlatformMoneyCount(@Param("orders")Orders orders);
+
+    List<Map<String, Object>> queryCakeMoney();
 }

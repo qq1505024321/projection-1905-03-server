@@ -27,6 +27,17 @@
 
     </sql>
 
+
+    <select id="queryOrderBiao" resultType="java.util.LinkedHashMap">
+    select COUNT(*) count,DATE_FORMAT(createtime,'%Y-%m-%d') time  from t_order GROUP BY DATE_FORMAT(createtime,'%Y-%m-%d')
+  </select>
+
+    <select id="queryColumn" resultType="java.util.Map">
+        select sum(price) money,DATE_FORMAT(createtime,'%m') currentmonth
+        from t_order t
+        GROUP BY  DATE_FORMAT(t.createtime,'%m')
+    </select>
+
   <!--  <delete id="deleteCalssify" parameterType="string">
   	delete from ht_classify  where classifyId in (${ids})
     </delete>

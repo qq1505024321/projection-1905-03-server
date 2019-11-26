@@ -29,13 +29,13 @@ public class MoneyServiceImpl implements  MoneyService{
 
     @Override
     public JSONObject queryTeacherMoney(Integer page, Integer rows, Orders orders) {
-            long total = moneyMapper.getTeacherMoneyCount(orders);
-            Integer start = (page-1)*rows;
-            JSONObject json = new JSONObject();
-            List<Orders> bookList = moneyMapper.queryTeacherMoney(orders,start,rows);
-            json.put("total", total);
-            json.put("rows", bookList);
-            return json;
+        long total = moneyMapper.getTeacherMoneyCount(orders);
+        Integer start = (page-1)*rows;
+        JSONObject json = new JSONObject();
+        List<Orders> bookList = moneyMapper.queryTeacherMoney(orders,start,rows);
+        json.put("total", total);
+        json.put("rows", bookList);
+        return json;
     }
 
     @Override
@@ -47,6 +47,11 @@ public class MoneyServiceImpl implements  MoneyService{
         json.put("total", total);
         json.put("rows", bookList);
         return json;
+    }
+
+    @Override
+    public List<Map<String, Object>> queryCakeMoney() {
+        return moneyMapper.queryCakeMoney();
     }
 
 }

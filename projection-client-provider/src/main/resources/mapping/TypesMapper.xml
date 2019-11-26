@@ -7,8 +7,17 @@
     </select>
 
     <select id="queryType" resultType="com.jk.model.Types">
-     select * from ht_classify order by classifyId  limit ${start},  ${rows}
+     select * from ht_classify where 1=1
+        <include refid="searchSql"></include>
+     order by classifyId  limit ${start},  ${rows}
     </select>
+
+    <sql id="searchSql">
+       <if test="types.classifyName != null and types.classifyName != ''">
+            and classifyName = #{types.classifyName}
+        </if>
+    </sql>
+
 
     <delete id="deleteCalssify" parameterType="string">
   	delete from ht_classify  where classifyId in (${ids})

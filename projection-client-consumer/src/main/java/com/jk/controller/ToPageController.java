@@ -89,4 +89,10 @@ public class ToPageController {
         return "showAdvertising";
     }
 
+    //这是跳前图表
+    @RequestMapping("toQueryOrderBiao")
+    public String toQueryOrderBiao(){
+        return "teacher/highcharts";
+    }
+
 }

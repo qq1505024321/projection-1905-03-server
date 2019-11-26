@@ -52,5 +52,9 @@
         GROUP BY  DATE_FORMAT(t.createtime,'%m')
         limit #{start},#{rows}
     </select>
+    <!--饼状图-->
+    <select id="queryCakeMoney" resultType="java.util.LinkedHashMap">
+    select price y,teacher 老师姓名 from t_order group by teacher
+    </select>
 
 </mapper>

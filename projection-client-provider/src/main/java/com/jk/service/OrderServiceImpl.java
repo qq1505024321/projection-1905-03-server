@@ -27,4 +27,14 @@ public class OrderServiceImpl implements  OrderService{
         map.put("rows", list);
         return map;
     }
+
+    @Override
+    public List<Map<String, Object>> queryOrderBiao() {
+        return orderMapper.queryOrderBiao();
+    }
+
+    @Override
+    public List<Map<String, Object>> queryColumn() {
+        return orderMapper.queryColumn();
+    }
 }
