@@ -29,7 +29,7 @@ public class MoneyServiceImpl implements  MoneyService{
 
     @Override
     public JSONObject queryTeacherMoney(Integer page, Integer rows, Orders orders) {
-            long total = moneyMapper.getCount(orders);
+            long total = moneyMapper.getTeacherMoneyCount(orders);
             Integer start = (page-1)*rows;
             JSONObject json = new JSONObject();
             List<Orders> bookList = moneyMapper.queryTeacherMoney(orders,start,rows);
@@ -40,7 +40,7 @@ public class MoneyServiceImpl implements  MoneyService{
 
     @Override
     public JSONObject queryPlatformMoney(Integer page, Integer rows, Orders orders) {
-        long total = moneyMapper.getCount(orders);
+        long total = moneyMapper.getPlatformMoneyCount(orders);
         Integer start = (page-1)*rows;
         JSONObject json = new JSONObject();
         List<Orders> bookList = moneyMapper.queryPlatformMoney(orders,start,rows);

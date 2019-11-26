@@ -2,33 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.mapper.MoneyMapper" >
 
-  <!--  select teacher,sum(price),DATE_FORMAT(createtime,'%m') currentmonth
-    from t_order
-     where teacher like '%y%'
-    GROUP BY teacher,
-    DATE_FORMAT(createtime,'%m')-->
-
-
+    <!--查询老师收入-->
     <sql id="searchSql">
         <where>
             <if test="orders.teacher !=null and orders.teacher !=''">
                 and t.teacher like '%${orders.teacher}%'
             </if>
-            <if test="orders.currentmonth !=null and orders.currentmonth >0">
-                and DATE_FORMAT(t.createtime,'%m') = ${orders.currentmonth}
-            </if>
-      <!--      <if test="orders.createtime != null and orders.createtime != ''">
-                and t.createtime &gt;= ${orders.createtime}
-            </if>
-            <if test="orders.endDate != null and orders.endDate !='' ">
-                and t.createtime &lt;= ${orders.endDate}
-            </if>-->
         </where>
     </sql>
 
-    <select id="getCount" resultType="long">
-        select count(*) from t_order t
+    <select id="getTeacherMoneyCount" resultType="long">
+        select count(*) from
+        (select id,teacher,sum(price) money,DATE_FORMAT(createtime,'%m') currentmonth
+        from t_order t
         <include refid="searchSql"/>
+        GROUP BY t.teacher,
+        DATE_FORMAT(t.createtime,'%m')) b
     </select>
 
     <select id="queryTeacherMoney" resultType="com.jk.model.Orders">
@@ -39,19 +28,29 @@
         DATE_FORMAT(t.createtime,'%m')
         limit #{start},#{rows}
     </select>
+    <!--查询平台收入-->
+    <sql id="searchSql2">
+        <where>
+            <if test="orders.currentmonth !=null and orders.currentmonth >0">
+                and DATE_FORMAT(t.createtime,'%m') = ${orders.currentmonth}
+            </if>
+        </where>
+    </sql>
 
+    <select id="getPlatformMoneyCount" resultType="long">
+        SELECT count(*) from
+        (select id
+        from t_order t
+        <include refid="searchSql2"/>
+        GROUP BY  DATE_FORMAT(t.createtime,'%m')) b
+    </select>
 
     <select id="queryPlatformMoney" resultType="com.jk.model.Orders">
        select id,sum(price) money,DATE_FORMAT(createtime,'%m') currentmonth
         from t_order t
-        <include refid="searchSql"/>
+        <include refid="searchSql2"/>
         GROUP BY  DATE_FORMAT(t.createtime,'%m')
         limit #{start},#{rows}
     </select>
-
-
-
-
-
 
 </mapper>
